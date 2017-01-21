@@ -26,5 +26,6 @@ dependencies {
     })
     compile 'com.android.support:appcompat-v7:25.1.0'
     compile 'com.android.support:design:25.1.0'
+    compile 'me.dm7.barcodescanner:zbar:1.9'
     testCompile 'junit:junit:4.12'
 }
