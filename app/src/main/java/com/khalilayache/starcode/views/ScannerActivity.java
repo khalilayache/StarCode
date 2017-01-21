@@ -47,7 +47,7 @@ public class ScannerActivity extends AppCompatActivity implements ZBarScannerVie
 
     @Override
     public void handleResult(Result rawResult) {
-        if (!rawResult.getContents().contains("http://swapi.co/api")){
+        if (!rawResult.getContents().contains("http://swapi.co/api/people/")){
             Toast.makeText(this, "URL inválida", Toast.LENGTH_SHORT).show();
 
             Handler handler = new Handler();
