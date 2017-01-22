@@ -8,6 +8,7 @@ public class StarWarsSpecie implements java.io.Serializable {
     private String url;
     private String name;
     private String designation;
+    private String char_url;
 
 
     public String getLanguage() {
@@ -48,5 +49,13 @@ public class StarWarsSpecie implements java.io.Serializable {
 
     public void setDesignation(String designation) {
         this.designation = designation;
+    }
+
+    public String getChar_url() {
+        return char_url;
+    }
+
+    public void setChar_url(String char_url) {
+        this.char_url = char_url;
     }
 }

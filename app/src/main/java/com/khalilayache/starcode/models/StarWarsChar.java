@@ -13,14 +13,15 @@ public class StarWarsChar implements java.io.Serializable {
     private String eye_color;
     private String birth_year;
     private String gender;
-    private StarWarsPlanet homeworld;
+    private String homeworld;
     private String url;
-    private String created;
+    private String date;
+    private String time;
 
-    private ArrayList<StarWarsFilm> films;
-    private ArrayList<StarWarsShip> starships;
-    private ArrayList<StarWarsVehicle> vehicles;
-    private ArrayList<StarWarsSpecie> species;
+    private ArrayList<String> films;
+    private ArrayList<String> starships;
+    private ArrayList<String> vehicles;
+    private ArrayList<String> species;
 
     public String getName() {
         return name;
@@ -86,11 +87,11 @@ public class StarWarsChar implements java.io.Serializable {
         this.gender = gender;
     }
 
-    public StarWarsPlanet getHomeworld() {
+    public String getHomeworld() {
         return homeworld;
     }
 
-    public void setHomeworld(StarWarsPlanet homeworld) {
+    public void setHomeworld(String homeworld) {
         this.homeworld = homeworld;
     }
 
@@ -102,43 +103,51 @@ public class StarWarsChar implements java.io.Serializable {
         this.url = url;
     }
 
-    public String getCreated() {
-        return created;
+    public String getDate() {
+        return date;
     }
 
-    public void setCreated(String created) {
-        this.created = created;
+    public void setDate(String date) {
+        this.date = date;
     }
 
-    public ArrayList<StarWarsFilm> getFilms() {
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    public ArrayList<String> getFilms() {
         return films;
     }
 
-    public void setFilms(ArrayList<StarWarsFilm> films) {
+    public void setFilms(ArrayList<String> films) {
         this.films = films;
     }
 
-    public ArrayList<StarWarsShip> getStarships() {
+    public ArrayList<String> getStarships() {
         return starships;
     }
 
-    public void setStarships(ArrayList<StarWarsShip> starships) {
+    public void setStarships(ArrayList<String> starships) {
         this.starships = starships;
     }
 
-    public ArrayList<StarWarsVehicle> getVehicles() {
+    public ArrayList<String> getVehicles() {
         return vehicles;
     }
 
-    public void setVehicles(ArrayList<StarWarsVehicle> vehicles) {
+    public void setVehicles(ArrayList<String> vehicles) {
         this.vehicles = vehicles;
     }
 
-    public ArrayList<StarWarsSpecie> getSpecies() {
+    public ArrayList<String> getSpecies() {
         return species;
     }
 
-    public void setSpecies(ArrayList<StarWarsSpecie> species) {
+    public void setSpecies(ArrayList<String> species) {
         this.species = species;
     }
 }

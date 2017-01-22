@@ -1,31 +1,56 @@
 package com.khalilayache.starcode.views;
 
 import android.Manifest;
+import android.app.LoaderManager;
+import android.content.Context;
 import android.content.Intent;
+import android.content.Loader;
 import android.content.pm.PackageManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.khalilayache.starcode.R;
+import com.khalilayache.starcode.adapters.StarWarsCharListAdapter;
+import com.khalilayache.starcode.models.StarWarsChar;
 
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
 
     private static final int CAMERA_PERMISSION = 958;
     private static final int QRCODE_INTENT = 674;
+    private static final int CHAR_LOADER_ID = 257;
 
     private Class<?> mClss;
+
+    private TextView emptyStateTextView;
+    private StarWarsCharListAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        emptyStateTextView = (TextView) findViewById(R.id.empty_view);
+
+        ListView starWarsCharsListView = (ListView) findViewById(R.id.list);
+
+        adapter = new StarWarsCharListAdapter(this, new ArrayList<StarWarsChar>());
+
+        starWarsCharsListView.setAdapter(adapter);
+        starWarsCharsListView.setEmptyView(emptyStateTextView);
 
     }
 
@@ -51,7 +76,6 @@ public class MainActivity extends AppCompatActivity {
 
         if(requestCode == QRCODE_INTENT){
             if(resultCode == RESULT_OK){
-                 //implementar requisição api
 
                 Toast.makeText(this, "String recebida = " + data.getStringExtra("url"), Toast.LENGTH_SHORT).show();
             }else if(resultCode == RESULT_CANCELED){
@@ -75,5 +99,4 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    //implementar negação de permissao reincidente
 }

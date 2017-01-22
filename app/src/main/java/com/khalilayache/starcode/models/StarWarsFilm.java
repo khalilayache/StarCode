@@ -6,6 +6,7 @@ public class StarWarsFilm implements java.io.Serializable {
     private String director;
     private String title;
     private String url;
+    private String char_url;
     private int episode_id;
     private String release_date;
     private String producer;
@@ -56,6 +57,14 @@ public class StarWarsFilm implements java.io.Serializable {
 
     public void setProducer(String producer) {
         this.producer = producer;
+    }
+
+    public String getChar_url() {
+        return char_url;
+    }
+
+    public void setChar_url(String char_url) {
+        this.char_url = char_url;
     }
 }
 

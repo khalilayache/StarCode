@@ -8,6 +8,7 @@ public class StarWarsPlanet implements java.io.Serializable {
     private String population;
     private String diameter;
     private String name;
+    private String char_url;
 
 
     public String getClimate() {
@@ -50,4 +51,11 @@ public class StarWarsPlanet implements java.io.Serializable {
         this.name = name;
     }
 
+    public String getChar_url() {
+        return char_url;
+    }
+
+    public void setChar_url(String char_url) {
+        this.char_url = char_url;
+    }
 }
