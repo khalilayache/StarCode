@@ -38,17 +38,19 @@ public class StarWarsCharListAdapter extends ArrayAdapter<StarWarsChar> {
 
         final StarWarsChar currentChar = getItem(position);
 
-        TextView nameView = (TextView) listViewItem.findViewById(R.id.name);
-        nameView.setText(currentChar.getName());
+        if(currentChar != null) {
+            TextView nameView = (TextView) listViewItem.findViewById(R.id.name);
+            nameView.setText(currentChar.getName());
 
-        TextView urlView = (TextView) listViewItem.findViewById(R.id.url);
-        urlView.setText(currentChar.getUrl());
+            TextView urlView = (TextView) listViewItem.findViewById(R.id.url);
+            urlView.setText(currentChar.getUrl());
 
-        TextView dateView = (TextView) listViewItem.findViewById(R.id.date);
-        dateView.setText(currentChar.getDate());
+            TextView dateView = (TextView) listViewItem.findViewById(R.id.date);
+            dateView.setText(currentChar.getDate());
 
-        TextView timeView = (TextView) listViewItem.findViewById(R.id.time);
-        timeView.setText(currentChar.getTime());
+            TextView timeView = (TextView) listViewItem.findViewById(R.id.time);
+            timeView.setText(currentChar.getTime());
+        }
 
         return listViewItem;
     }
