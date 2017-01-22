@@ -104,4 +104,58 @@ public final class SQLUtils extends DBHelper {
     }
 
     //endregion
+
+    //region StarWarsValidURLs Methods
+    public void insertStarWarsValidURLs(ArrayList<String> validURLs) {
+        SQLiteDatabase db = getWritableDatabase();
+
+        db.delete("ValidURLs",null,null);
+        for (int i = 0; i < validURLs.size(); i++) {
+            ContentValues values = getContentValuesStarWarsValidURLs(validURLs.get(i));
+            db.insert("ValidURLs",null, values);
+        }
+
+        db.close();
+
+    }
+
+    private ContentValues getContentValuesStarWarsValidURLs(String url) {
+
+        ContentValues values = new ContentValues();
+        values.put("url", url);
+
+        return values;
+    }
+
+    public ArrayList<String> getAllStarWarsValidURL(){
+        SQLiteDatabase db = getReadableDatabase();
+        ArrayList<String> urlList = new ArrayList<>();
+        String sql = "SELECT * FROM ValidURLs";
+        Cursor c = db.rawQuery(sql, null);
+        if (c.getCount() > 0) {
+            while (c.moveToNext()){
+                String validURL;
+                validURL = c.getString(c.getColumnIndex("url"));
+                urlList.add(validURL);
+            }
+        }
+        c.close();
+        db.close();
+        return urlList;
+    }
+
+    public boolean getStarWarsValidURL(String url){
+        SQLiteDatabase db = getReadableDatabase();
+        String sql = "SELECT * FROM ValidURLs where url = ?";
+        String[] params = {url};
+        Cursor c = db.rawQuery(sql, params);
+        if (c.getCount() > 0) {
+            return  true;
+        }
+        c.close();
+        db.close();
+        return false;
+    }
+
+    //endregion
 }

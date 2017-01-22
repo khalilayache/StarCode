@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.khalilayache.starcode.R;
+import com.khalilayache.starcode.utils.SQLUtils;
 
 import me.dm7.barcodescanner.zbar.Result;
 import me.dm7.barcodescanner.zbar.ZBarScannerView;
@@ -48,7 +49,7 @@ public class ScannerActivity extends AppCompatActivity implements ZBarScannerVie
     @Override
     public void handleResult(Result rawResult) {
         if (!rawResult.getContents().contains("http://swapi.co/api/people/")){
-            Toast.makeText(this, "URL inválida", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.invalid_url, Toast.LENGTH_SHORT).show();
 
             Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
@@ -56,13 +57,28 @@ public class ScannerActivity extends AppCompatActivity implements ZBarScannerVie
                 public void run() {
                     mScannerView.resumeCameraPreview(ScannerActivity.this);
                 }
-            }, 2000);
+            }, 1000);
             return;
         }
-        Intent intent = new Intent();
-        intent.putExtra("url",rawResult.getContents());
-        setResult(RESULT_OK,intent);
-        finish();
+
+        SQLUtils db = new SQLUtils(getApplicationContext());
+        if(db.getStarWarsValidURL(rawResult.getContents())) {
+            Intent intent = new Intent();
+            intent.putExtra("url", rawResult.getContents());
+            setResult(RESULT_OK, intent);
+            finish();
+        }else{
+            Toast.makeText(this, R.string.invalid_url, Toast.LENGTH_SHORT).show();
+
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mScannerView.resumeCameraPreview(ScannerActivity.this);
+                }
+            }, 1000);
+
+        }
     }
 
     public void setupToolbar() {

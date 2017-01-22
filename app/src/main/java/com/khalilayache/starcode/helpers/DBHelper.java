@@ -9,7 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
  * @since 22/01/2017.
  */
 
-public class DBHelper extends SQLiteOpenHelper {
+public abstract class DBHelper extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "StarCodeDB";
 
@@ -20,8 +20,15 @@ public class DBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
 
+        //region ValidURLs Table
+        String sql = "CREATE TABLE ValidURLs (" +
+                "url TEXT);";
+        db.execSQL(sql);
+
+        //endregion
+
         //region StarWarsChar Table
-        String sql = "CREATE TABLE Chars (" +
+         sql = "CREATE TABLE Chars (" +
                 "name TEXT," +
                 "height TEXT," +
                 "mass TEXT," +
@@ -34,7 +41,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 "url TEXT," +
                 "date TEXT," +
                 "time TEXT);";
-        db.execSQL(sql);
+         db.execSQL(sql);
         //endregion
 
 
@@ -42,6 +49,14 @@ public class DBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+
+        String sql = "DROP TABLE Chars";
+        db.execSQL(sql);
+
+        sql = "DROP TABLE ValidURLs";
+        db.execSQL(sql);
+
+        onCreate(db);
 
     }
 }

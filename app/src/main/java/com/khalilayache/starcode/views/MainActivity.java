@@ -33,9 +33,11 @@ public class MainActivity extends AppCompatActivity {
     private static final int QRCODE_INTENT = 674;
     private static final int CHAR_LOADER_ID = 257;
 
-    private String apiURL;
+    private String apiCharURL;
+    private final String API_VALID_URL = "http://swapi.co/api/people";
 
-    private StarWarsCharsAsyncTask starWarsTask;
+    private StarWarsCharsAsyncTask starWarsCharsTask;
+    private StarWarsValidURLsAsyncTask starWarsValidURLsTask;
 
     private Class<?> mClss;
     private ArrayList<StarWarsChar> charArrayList;
@@ -64,12 +66,25 @@ public class MainActivity extends AppCompatActivity {
         starWarsCharsListView.setEmptyView(emptyStateTextView);
         emptyStateTextView.setText(R.string.no_chars_registered);
 
+        if (DeviceHelper.checkInternetConnection(getApplicationContext())) {
+            starWarsValidURLsTask = new StarWarsValidURLsAsyncTask();
+            starWarsValidURLsTask.execute();
+        }
+
     }
 
     public void launchScannerActivity(View v) {
 
         if(DeviceHelper.checkInternetConnection(getApplicationContext())) {
-            launchActivity(ScannerActivity.class);
+            SQLUtils db = new SQLUtils(getApplicationContext());
+            if(db.getAllStarWarsValidURL().size() > 0) {
+                launchActivity(ScannerActivity.class);
+            }else{
+                starWarsValidURLsTask = new StarWarsValidURLsAsyncTask();
+                starWarsValidURLsTask.execute();
+                launchActivity(ScannerActivity.class);
+            }
+
         }else{
             Toast.makeText(this, getString(R.string.no_connection), Toast.LENGTH_SHORT).show();
         }
@@ -97,9 +112,9 @@ public class MainActivity extends AppCompatActivity {
                     loadingIndicator.setVisibility(View.VISIBLE);
                     emptyStateTextView.setVisibility(View.GONE);
 
-                    apiURL = data.getStringExtra("url");
-                    starWarsTask = new StarWarsCharsAsyncTask();
-                    starWarsTask.execute(apiURL);
+                    apiCharURL = data.getStringExtra("url");
+                    starWarsCharsTask = new StarWarsCharsAsyncTask();
+                    starWarsCharsTask.execute();
                 }else{
                     Toast.makeText(this, getString(R.string.no_connection), Toast.LENGTH_SHORT).show();
                 }
@@ -125,23 +140,21 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
-
-
     //region Star Wars Chars AsyncTask
-    private class StarWarsCharsAsyncTask extends AsyncTask<String, Void, StarWarsChar> {
+    private class StarWarsCharsAsyncTask extends AsyncTask<Void, Void, StarWarsChar> {
 
         @Override
-        protected StarWarsChar doInBackground(String... urls) {
-            if(apiURL == null){
+        protected StarWarsChar doInBackground(Void... urls) {
+            if(apiCharURL == null){
                 return null;
             }
 
-            return ApiUtils.fetchCharData(apiURL);
+            return ApiUtils.fetchCharData(apiCharURL);
         }
 
         @Override
         protected void onPostExecute(StarWarsChar starWarsChar) {
+            starWarsCharsTask = null;
             SQLUtils db = new SQLUtils(getApplicationContext());
             StarWarsChar checkChar =  db.getStarWarsChar(starWarsChar);
 
@@ -157,6 +170,28 @@ public class MainActivity extends AppCompatActivity {
                 loadingIndicator.setVisibility(View.GONE);
                 Toast.makeText(MainActivity.this, R.string.chars_already_registered, Toast.LENGTH_SHORT).show();
             }
+
+        }
+    }
+    //endregion
+
+    //region Star Wars Valid URLs AsyncTask
+    private class StarWarsValidURLsAsyncTask extends AsyncTask<Void, Void, ArrayList<String>> {
+
+        @Override
+        protected ArrayList<String> doInBackground(Void... urls) {
+
+            return ApiUtils.fetchValidURLData(API_VALID_URL);
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<String> validURLs) {
+            SQLUtils db = new SQLUtils(getApplicationContext());
+            starWarsValidURLsTask = null;
+
+           if (validURLs != null & !validURLs.isEmpty()) {
+               db.insertStarWarsValidURLs(validURLs);
+           }
         }
     }
     //endregion

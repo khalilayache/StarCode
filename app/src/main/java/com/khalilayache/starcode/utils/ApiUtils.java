@@ -29,21 +29,7 @@ import java.util.List;
  */
 public final class ApiUtils {
 
-    public static StarWarsChar fetchCharData (String requestURL){
-
-        URL url =  createURL(requestURL);
-
-        String jsonResponse = null;
-
-        try{
-            jsonResponse = makeHttpRequest(url);
-        } catch (IOException e) {
-            Log.e("StarCode ERROR","Problem making the HTTP request", e);
-        }
-
-        return extractInfosFromJson(jsonResponse);
-    }
-
+    //region Generic API Methods
     private static URL createURL(String stringURL){
         URL url = null;
         try{
@@ -105,7 +91,25 @@ public final class ApiUtils {
         return output.toString();
     }
 
-    private static StarWarsChar extractInfosFromJson(String charJSON){
+    //endregion
+
+    //region StarWars Chars API Methods
+    public static StarWarsChar fetchCharData (String requestURL){
+
+        URL url =  createURL(requestURL);
+
+        String jsonResponse = null;
+
+        try{
+            jsonResponse = makeHttpRequest(url);
+        } catch (IOException e) {
+            Log.e("StarCode ERROR","Problem making the HTTP request", e);
+        }
+
+        return extractCharsFromJson(jsonResponse);
+    }
+
+    private static StarWarsChar extractCharsFromJson(String charJSON){
 
         if(TextUtils.isEmpty(charJSON)){
             return null;
@@ -179,7 +183,53 @@ public final class ApiUtils {
 
         return starWarsChar;
     }
+    //endregion
 
+    //region StarWars Valid URL Methods
+    public static ArrayList<String> fetchValidURLData(String requestURL) {
+        URL url =  createURL(requestURL);
+
+        String jsonResponse = null;
+
+        try{
+            jsonResponse = makeHttpRequest(url);
+        } catch (IOException e) {
+            Log.e("StarCode ERROR","Problem making the HTTP request", e);
+        }
+
+
+        return extractURLsFromJson(jsonResponse);
+    }
+
+    private static ArrayList<String> extractURLsFromJson(String charJSON){
+
+        if(TextUtils.isEmpty(charJSON)){
+            return null;
+        }
+
+        ArrayList<String> validUrls = new ArrayList<>();
+
+        try {
+            JSONObject root = new JSONObject(charJSON);
+            JSONArray results =  root.getJSONArray("results");
+
+            for(int i = 0; i < results.length(); i ++ ){
+                JSONObject currentItem = results.getJSONObject(i);
+                String url = currentItem.getString("url");
+                validUrls.add(url);
+            }
+
+
+        } catch (JSONException e) {
+            Log.e("StarCode ERROR","Problem parsing the earthquake JSON results", e);
+        }
+
+        return validUrls;
+    }
+
+    //endregion
+
+    //region FormatMethods
     private static Date getTimeNow() {
         Calendar c = Calendar.getInstance();
         return c.getTime();
@@ -194,4 +244,7 @@ public final class ApiUtils {
         SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
         return dateFormat.format(date);
     }
+
+
+    //endregion
 }
