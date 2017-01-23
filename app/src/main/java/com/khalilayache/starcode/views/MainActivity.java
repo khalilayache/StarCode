@@ -46,7 +46,6 @@ public class MainActivity extends AppCompatActivity {
     private StarWarsCharListAdapter adapter;
     private View loadingIndicator;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -99,6 +98,7 @@ public class MainActivity extends AppCompatActivity {
         } else {
             Intent intent = new Intent(this, clss);
             startActivityForResult(intent,QRCODE_INTENT);
+
         }
     }
 

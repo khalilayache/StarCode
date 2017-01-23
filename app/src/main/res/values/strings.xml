@@ -6,4 +6,8 @@
     <string name="no_chars_registered">No chars registered</string>
     <string name="chars_already_registered">Char already registered!</string>
     <string name="invalid_url">URL inválida</string>
+    <string name="pager_title_info">Infos</string>
+    <string name="pager_title_films">Films</string>
+    <string name="pager_title_ships">Ships</string>
+    <string name="pager_title_vehicle">Vehicle</string>
 </resources>

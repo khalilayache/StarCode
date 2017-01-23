@@ -1,6 +1,8 @@
 package com.khalilayache.starcode.adapters;
 
-import android.content.Context;
+import  android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +12,7 @@ import android.widget.TextView;
 
 import com.khalilayache.starcode.R;
 import com.khalilayache.starcode.models.StarWarsChar;
+import com.khalilayache.starcode.views.DetailsActivity;
 
 import java.util.List;
 
@@ -50,6 +53,16 @@ public class StarWarsCharListAdapter extends ArrayAdapter<StarWarsChar> {
 
             TextView timeView = (TextView) listViewItem.findViewById(R.id.time);
             timeView.setText(currentChar.getTime());
+
+
+            listViewItem.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(v.getContext(), DetailsActivity.class);
+                    intent.putExtra("char",currentChar);
+                    getContext().startActivity(intent);
+                }
+            });
         }
 
         return listViewItem;

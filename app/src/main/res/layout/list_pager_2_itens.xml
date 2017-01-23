@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="12dp">
+
+    <TextView
+        android:id="@+id/primary_information_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textStyle="bold"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:textColor="@color/textColorItemPrimary"
+        android:textSize="16sp"
+        tools:text="Name:"
+        />
+
+    <TextView
+        android:id="@+id/primary_information"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:layout_toEndOf="@id/primary_information_label"
+        android:layout_marginStart="6dp"
+        android:maxLines="1"
+        android:textStyle="bold"
+        android:textColor="@color/textColorItemPrimary"
+        android:textSize="16sp"
+        tools:text="Luke Skywalker"
+        />
+
+    <TextView
+        android:id="@+id/secundary_information_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:fontFamily="sans-serif-medium"
+        android:layout_below="@+id/primary_information_label"
+        android:layout_marginTop="4dp"
+        android:maxLines="1"
+        android:textColor="@color/textColorItemDetail"
+        android:textSize="14sp"
+        tools:text="Model:"
+        />
+
+    <TextView
+        android:id="@+id/secundary_information"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:fontFamily="sans-serif-medium"
+        android:layout_below="@+id/primary_information_label"
+        android:layout_toEndOf="@id/secundary_information_label"
+        android:layout_marginStart="6dp"
+        android:layout_marginTop="4dp"
+        android:maxLines="1"
+        android:textColor="@color/textColorItemDetail"
+        android:textSize="14sp"
+        tools:text="T51"
+        />
+
+</RelativeLayout>
