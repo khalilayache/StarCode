@@ -35,4 +35,5 @@
     <string name="release_date">Release Date:</string>
     <string name="ship_model">Model:</string>
     <string name="no_ships_found">No ships found</string>
+    <string name="no_vehicles_found">No vehicles found</string>
 </resources>

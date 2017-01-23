@@ -110,9 +110,19 @@ public class FilmsFragment extends Fragment {
         @Override
         protected void onPostExecute(ArrayList<StarWarsFilm> starWarsFilms) {
             starWarsFilmsTask = null;
-            SQLUtils db = new SQLUtils(rootView.getContext());
-            db.insertStarWarsFilms(starWarsFilms, starWarsChar.getName());
-            fillList(starWarsFilms);
+            if(starWarsFilms != null) {
+                if(starWarsFilms.size() > 0) {
+                    SQLUtils db = new SQLUtils(rootView.getContext());
+                    db.insertStarWarsFilms(starWarsFilms, starWarsChar.getName());
+                    fillList(starWarsFilms);
+                }else{
+                    loadingIndicator.setVisibility(View.GONE);
+                    emptyStateTextView.setVisibility(View.VISIBLE);
+                }
+            }else{
+                loadingIndicator.setVisibility(View.GONE);
+                emptyStateTextView.setVisibility(View.VISIBLE);
+            }
         }
     }
     //endregion

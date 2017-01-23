@@ -1,6 +1,5 @@
 package com.khalilayache.starcode.adapters;
 
-
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
@@ -10,7 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.khalilayache.starcode.R;
-import com.khalilayache.starcode.models.StarWarsShip;
+import com.khalilayache.starcode.models.StarWarsVehicle;
 
 import java.util.List;
 
@@ -19,10 +18,10 @@ import java.util.List;
  * @since 23/01/2017.
  */
 
-public class StarWarsShipsListAdapter extends ArrayAdapter<StarWarsShip> {
+public class StarWarsVehiclesListAdapter extends ArrayAdapter<StarWarsVehicle> {
 
-    public StarWarsShipsListAdapter(Context context, List<StarWarsShip> starWarsShips) {
-        super(context, 0, starWarsShips);
+    public StarWarsVehiclesListAdapter(Context context, List<StarWarsVehicle> starWarsVehicles) {
+        super(context, 0, starWarsVehicles);
     }
 
     @NonNull
@@ -34,16 +33,14 @@ public class StarWarsShipsListAdapter extends ArrayAdapter<StarWarsShip> {
             listViewItem = LayoutInflater.from(getContext()).inflate(R.layout.list_pager_2_itens,parent,false);
         }
 
-        final StarWarsShip currentShip = getItem(position);
+        final StarWarsVehicle currentVehicle = getItem(position);
 
-        if(currentShip != null) {
+        if(currentVehicle != null) {
             TextView nameView = (TextView) listViewItem.findViewById(R.id.name);
-            nameView.setText(currentShip.getName());
+            nameView.setText(currentVehicle.getName());
 
             TextView modelView = (TextView) listViewItem.findViewById(R.id.model);
-            modelView.setText(currentShip.getModel());
-
-
+            modelView.setText(currentVehicle.getModel());
         }
 
         return listViewItem;

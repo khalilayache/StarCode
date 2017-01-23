@@ -138,13 +138,14 @@ public class CharInfoFragment extends Fragment{
         @Override
         protected void onPostExecute(StarWarsPlanet starWarsPlanet) {
             starWarsPlanetTask = null;
-            SQLUtils db = new SQLUtils(rootView.getContext());
-            db.insertStarWarsPlanets(starWarsPlanet, starWarsChar.getName());
-            fillHomeworld(starWarsPlanet);
-            if(starWarsSpecieTask == null) {
-                loadingIndicator.setVisibility(View.GONE);
+            if(starWarsPlanet != null) {
+                SQLUtils db = new SQLUtils(rootView.getContext());
+                db.insertStarWarsPlanets(starWarsPlanet, starWarsChar.getName());
+                fillHomeworld(starWarsPlanet);
+                if (starWarsSpecieTask == null) {
+                    loadingIndicator.setVisibility(View.GONE);
+                }
             }
-
         }
     }
     //endregion
@@ -164,13 +165,14 @@ public class CharInfoFragment extends Fragment{
         @Override
         protected void onPostExecute(StarWarsSpecie specie) {
             starWarsSpecieTask = null;
-            SQLUtils db = new SQLUtils(rootView.getContext());
-            db.insertStarWarsSpecies(specie, starWarsChar.getName());
-            fillSpecie(specie);
-            if(starWarsPlanetTask == null) {
-                loadingIndicator.setVisibility(View.GONE);
+            if(specie != null) {
+                SQLUtils db = new SQLUtils(rootView.getContext());
+                db.insertStarWarsSpecies(specie, starWarsChar.getName());
+                fillSpecie(specie);
+                if (starWarsPlanetTask == null) {
+                    loadingIndicator.setVisibility(View.GONE);
+                }
             }
-
         }
     }
     //endregion

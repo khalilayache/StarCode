@@ -94,7 +94,7 @@ public class ShipsFragment extends Fragment {
         emptyStateTextView.setVisibility(View.GONE);
     }
 
-    //region Star Wars Films AsyncTask
+    //region Star Wars Ships AsyncTask
     private class StarWarsShipsAsyncTask extends AsyncTask<Void, Void, ArrayList<StarWarsShip>> {
 
         @Override
@@ -109,9 +109,19 @@ public class ShipsFragment extends Fragment {
         @Override
         protected void onPostExecute(ArrayList<StarWarsShip> starWarsShips) {
             starWarsShipTask = null;
-            SQLUtils db = new SQLUtils(rootView.getContext());
-            db.insertStarWarsShips(starWarsShips, starWarsChar.getName());
-            fillList(starWarsShips);
+            if(starWarsShips != null) {
+                if(starWarsShips.size() > 0) {
+                    SQLUtils db = new SQLUtils(rootView.getContext());
+                    db.insertStarWarsShips(starWarsShips, starWarsChar.getName());
+                    fillList(starWarsShips);
+                }else{
+                    loadingIndicator.setVisibility(View.GONE);
+                    emptyStateTextView.setVisibility(View.VISIBLE);
+                }
+            }else{
+                loadingIndicator.setVisibility(View.GONE);
+                emptyStateTextView.setVisibility(View.VISIBLE);
+            }
         }
     }
     //endregion

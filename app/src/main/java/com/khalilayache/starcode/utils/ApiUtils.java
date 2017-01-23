@@ -8,6 +8,7 @@ import com.khalilayache.starcode.models.StarWarsFilm;
 import com.khalilayache.starcode.models.StarWarsPlanet;
 import com.khalilayache.starcode.models.StarWarsShip;
 import com.khalilayache.starcode.models.StarWarsSpecie;
+import com.khalilayache.starcode.models.StarWarsVehicle;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -397,8 +398,48 @@ public final class ApiUtils {
 
     //endregion
 
+    //region StarWars Vehicles Methods
+    public static ArrayList<StarWarsVehicle> fetchVehicleData(ArrayList<String> urlVehicle) {
 
 
+        ArrayList<StarWarsVehicle> starWarsVehicles = new ArrayList<>();
+        for(int i = 0; i < urlVehicle.size(); i++) {
+            URL url = createURL(urlVehicle.get(i));
+
+            String jsonResponse = null;
+
+            try {
+                jsonResponse = makeHttpRequest(url);
+            } catch (IOException e) {
+                Log.e("StarCode ERROR", "Problem making the HTTP request", e);
+            }
+            starWarsVehicles.add(extractVehicleFromJson(jsonResponse));
+        }
+        return starWarsVehicles;
+    }
+
+    private static StarWarsVehicle extractVehicleFromJson(String charJSON){
+
+        if(TextUtils.isEmpty(charJSON)){
+            return null;
+        }
+
+        StarWarsVehicle vehicle = new StarWarsVehicle();
+
+        try {
+            JSONObject root = new JSONObject(charJSON);
+            vehicle.setName(root.getString("name"));
+            vehicle.setModel(root.getString("model"));
+
+        } catch (JSONException e) {
+            Log.e("StarCode ERROR","Problem parsing the earthquake JSON results", e);
+        }
+
+        return vehicle;
+    }
+
+
+    //endregion
 
     //region FormatMethods
     private static Date getTimeNow() {

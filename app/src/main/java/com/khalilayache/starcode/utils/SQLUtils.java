@@ -12,6 +12,7 @@ import com.khalilayache.starcode.models.StarWarsFilm;
 import com.khalilayache.starcode.models.StarWarsPlanet;
 import com.khalilayache.starcode.models.StarWarsShip;
 import com.khalilayache.starcode.models.StarWarsSpecie;
+import com.khalilayache.starcode.models.StarWarsVehicle;
 
 import java.util.ArrayList;
 
@@ -42,6 +43,11 @@ public final class SQLUtils extends DBHelper {
             if(starWarsChar.getStarships().size() >0)
                 insertStarWarsURLShips(starWarsChar);
         }
+
+        if(starWarsChar.getVehicles() != null){
+            if(starWarsChar.getVehicles().size() >0)
+                insertStarWarsURLVehicles(starWarsChar);
+        }
     }
 
     public void updateStarWarsChar(StarWarsChar starWarsChar){
@@ -51,12 +57,19 @@ public final class SQLUtils extends DBHelper {
         db.update("Chars",values,"name = ?", params);
         db.close();
 
-        if(starWarsChar.getFilms().size() > 0 || starWarsChar.getFilms() != null){
-            updateStarWarsURLFilms(starWarsChar);
+        if(starWarsChar.getFilms() != null){
+            if(starWarsChar.getFilms().size()>0)
+                updateStarWarsURLFilms(starWarsChar);
         }
 
-        if(starWarsChar.getStarships().size() > 0 || starWarsChar.getStarships() != null){
-            updateStarWarsURLShips(starWarsChar);
+        if(starWarsChar.getStarships() != null){
+            if(starWarsChar.getStarships().size() >0)
+                updateStarWarsURLShips(starWarsChar);
+        }
+
+        if(starWarsChar.getVehicles() != null){
+            if(starWarsChar.getVehicles().size() >0)
+                updateStarWarsURLVehicles(starWarsChar);
         }
     }
 
@@ -347,6 +360,45 @@ public final class SQLUtils extends DBHelper {
 
     //endregion
 
+    //region StarWarsVehicle Methods
+    public void insertStarWarsVehicle(ArrayList<StarWarsVehicle> starWarsVehicles, String charName){
+        SQLiteDatabase db = getWritableDatabase();
+        for(int i = 0; i < starWarsVehicles.size(); i++) {
+            ContentValues values = getContentValuesStarWarsVehicle(starWarsVehicles.get(i), charName);
+            db.insert("Vehicles", null, values);
+        }
+        db.close();
+    }
+
+    private ContentValues getContentValuesStarWarsVehicle(StarWarsVehicle vehicle, String charName) {
+        ContentValues values = new ContentValues();
+        values.put("charName", charName);
+        values.put("name", vehicle.getName());
+        values.put("model", vehicle.getModel());
+        return values;
+    }
+
+    public ArrayList<StarWarsVehicle> getAllStarWarsVehicle(String name){
+        SQLiteDatabase db = getReadableDatabase();
+        String sql = "SELECT * FROM Vehicles where charName = ?";
+        String[] params = {name};
+        Cursor c = db.rawQuery(sql, params);
+        ArrayList<StarWarsVehicle> vehicles = new ArrayList<>();
+        if (c.getCount() > 0) {
+            while (c.moveToNext()){
+                StarWarsVehicle vehicle = new StarWarsVehicle();
+                vehicle.setName(c.getString(c.getColumnIndex("name")));
+                vehicle.setModel(c.getString(c.getColumnIndex("model")));
+                vehicles.add(vehicle);
+            }
+        }
+        c.close();
+        db.close();
+        return vehicles;
+    }
+
+    //endregion
+
     //region StarWarsURLFilms Methods
     public void insertStarWarsURLFilms(StarWarsChar starWarsChar){
         SQLiteDatabase db = getWritableDatabase();
@@ -442,7 +494,50 @@ public final class SQLUtils extends DBHelper {
 
     //endregion
 
+    //region StarWarsURLVehicles Methods
+    public void insertStarWarsURLVehicles(StarWarsChar starWarsChar){
+        SQLiteDatabase db = getWritableDatabase();
+        for(int i = 0; i < starWarsChar.getVehicles().size(); i++) {
+            ContentValues values = getContentValuesStarWarsURLVehicles(starWarsChar.getVehicles().get(i), starWarsChar.getName());
+            db.insert("CharVehicles", null, values);
+        }
 
+        db.close();
+    }
 
+    public void updateStarWarsURLVehicles(StarWarsChar starWarsChar){
+        SQLiteDatabase db = getWritableDatabase();
+        String[] params = {starWarsChar.getName()};
+        db.delete("CharVehicles","charName = ?",params);
+        db.delete("Vehicles","charName = ?",params);
+        db.close();
+        insertStarWarsURLVehicles(starWarsChar);
+    }
+
+    private ContentValues getContentValuesStarWarsURLVehicles(String urlVehicle, String charName) {
+        ContentValues values = new ContentValues();
+        values.put("charName", charName);
+        values.put("vehicleURL", urlVehicle);
+
+        return values;
+    }
+
+    public ArrayList<String> getAllStarWarsURLVehiclesString(StarWarsChar starWarsChar){
+        SQLiteDatabase db = getReadableDatabase();
+        ArrayList<String> vehiclesArrayList = new ArrayList<>();
+        String sql = "SELECT * FROM CharVehicles where charName = ?";
+        String[] params = {starWarsChar.getName()};
+        Cursor c = db.rawQuery(sql, params);
+        if (c.getCount() > 0) {
+            while (c.moveToNext()){
+                vehiclesArrayList.add(c.getString(c.getColumnIndex("vehicleURL")));
+            }
+        }
+        c.close();
+        db.close();
+        return vehiclesArrayList;
+    }
+
+    //endregion
 
 }
