@@ -6,8 +6,7 @@ public class StarWarsFilm implements java.io.Serializable {
     private String director;
     private String title;
     private String url;
-    private String char_url;
-    private int episode_id;
+    private String episode_id;
     private String release_date;
     private String producer;
 
@@ -35,11 +34,11 @@ public class StarWarsFilm implements java.io.Serializable {
         this.url = url;
     }
 
-    public int getEpisode_id() {
+    public String getEpisode_id() {
         return episode_id;
     }
 
-    public void setEpisode_id(int episode_id) {
+    public void setEpisode_id(String episode_id) {
         this.episode_id = episode_id;
     }
 
@@ -59,12 +58,5 @@ public class StarWarsFilm implements java.io.Serializable {
         this.producer = producer;
     }
 
-    public String getChar_url() {
-        return char_url;
-    }
-
-    public void setChar_url(String char_url) {
-        this.char_url = char_url;
-    }
 }
 

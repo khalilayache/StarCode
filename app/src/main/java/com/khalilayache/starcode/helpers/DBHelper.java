@@ -61,7 +61,53 @@ public abstract class DBHelper extends SQLiteOpenHelper {
 
         //endregion
 
+        //region CharFilms Table
+        sql = "CREATE TABLE CharFilms (" +
+                "charName TEXT," +
+                "filmURL TEXT);";
+        db.execSQL(sql);
+        //endregion
 
+        //region CharStarships Table
+        sql = "CREATE TABLE CharStarships (" +
+                "charName TEXT," +
+                "starshipURL TEXT);";
+        db.execSQL(sql);
+        //endregion
+
+        //region CharVehicles Table
+        sql = "CREATE TABLE CharVehicles (" +
+                "charName TEXT," +
+                "vehicleURL TEXT);";
+        db.execSQL(sql);
+        //endregion
+
+        //region Films Table
+        sql = "CREATE TABLE Films (" +
+                "charName TEXT," +
+                "title TEXT," +
+                "director TEXT," +
+                "episode TEXT," +
+                "releaseDate TEXT," +
+                "producer TEXT);";
+        db.execSQL(sql);
+        //endregion
+
+        //region Starships Table
+        sql = "CREATE TABLE Starships (" +
+                "charName TEXT," +
+                "name TEXT," +
+                "model TEXT);";
+        db.execSQL(sql);
+        //endregion
+
+        //region Vehicles Table
+        sql = "CREATE TABLE Vehicles (" +
+                "charName TEXT," +
+                "name TEXT," +
+                "model TEXT);";
+        db.execSQL(sql);
+        //endregion
     }
 
     @Override
@@ -77,6 +123,24 @@ public abstract class DBHelper extends SQLiteOpenHelper {
         db.execSQL(sql);
 
         sql = "DROP TABLE Species";
+        db.execSQL(sql);
+
+        sql = "DROP TABLE CharFilms";
+        db.execSQL(sql);
+
+        sql = "DROP TABLE CharStarships";
+        db.execSQL(sql);
+
+        sql = "DROP TABLE CharVehicles";
+        db.execSQL(sql);
+
+        sql = "DROP TABLE Films";
+        db.execSQL(sql);
+
+        sql = "DROP TABLE Starships";
+        db.execSQL(sql);
+
+        sql = "DROP TABLE Vehicles";
         db.execSQL(sql);
 
         onCreate(db);

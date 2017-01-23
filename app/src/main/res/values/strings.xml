@@ -9,7 +9,7 @@
     <string name="pager_title_info">Infos</string>
     <string name="pager_title_films">Films</string>
     <string name="pager_title_ships">Ships</string>
-    <string name="pager_title_vehicle">Vehicle</string>
+    <string name="pager_title_vehicle">Vehicles</string>
     <string name="chars_updated">Char updated!</string>
     <string name="char_details">Char Details</string>
     <string name="pager_info_name">name</string>
@@ -29,4 +29,9 @@
     <string name="meters">m</string>
     <string name="kilogram">kg</string>
     <string name="loading">Loading</string>
+    <string name="no_films_found">No films found</string>
+    <string name="director_name">Director:</string>
+    <string name="producer_name">Producer:</string>
+    <string name="release_date">Release Date:</string>
+    <string name="ship_model">Model:</string>
 </resources>

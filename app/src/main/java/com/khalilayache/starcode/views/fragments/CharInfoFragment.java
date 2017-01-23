@@ -27,7 +27,6 @@ import com.khalilayache.starcode.views.MainActivity;
 public class CharInfoFragment extends Fragment{
 
     private StarWarsChar starWarsChar;
-    private Bundle bundle;
     private View rootView;
     private View loadingIndicator;
 
@@ -39,7 +38,7 @@ public class CharInfoFragment extends Fragment{
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
-        bundle = getArguments();
+        Bundle bundle = getArguments();
         starWarsChar = (StarWarsChar) bundle.getSerializable("char");
 
         super.onCreate(savedInstanceState);
@@ -51,14 +50,17 @@ public class CharInfoFragment extends Fragment{
         rootView  = inflater.inflate(R.layout.pager_info,container,false);
         loadingIndicator = rootView.findViewById(R.id.loading_indicator);
         loadingIndicator.setVisibility(View.GONE);
+
         SQLUtils db = new SQLUtils(rootView.getContext());
         fillFields(starWarsChar);
+
         StarWarsPlanet planet = db.getStarWarsPlanets(starWarsChar.getName());
         if(planet.getName() == null) {
             loadingIndicator.setVisibility(View.VISIBLE);
             starWarsPlanetTask = new StarWarsPlanetAsyncTask();
             starWarsPlanetTask.execute();
         }
+
         StarWarsSpecie specie = db.getStarWarsSpecies(starWarsChar.getName());
         if(specie.getName() == null){
             loadingIndicator.setVisibility(View.VISIBLE);
@@ -67,11 +69,9 @@ public class CharInfoFragment extends Fragment{
         }
 
         if (specie.getName() != null & planet.getName() != null){
-
             fillHomeworld(planet);
             fillSpecie(specie);
         }
-
 
         return rootView;
     }
@@ -93,8 +93,8 @@ public class CharInfoFragment extends Fragment{
         TextView specie = (TextView) rootView.findViewById(R.id.specie);
 
         name.setText(starWarsChar.getName());
-        height.setText(starWarsChar.getHeight() + getString(R.string.meters));
-        mass.setText(starWarsChar.getMass() + getString(R.string.kilogram));
+        height.setText(starWarsChar.getHeight());
+        mass.setText(starWarsChar.getMass());
         hair_color.setText(starWarsChar.getHair_color());
         skin_color.setText(starWarsChar.getSkin_color());
         eye_color.setText(starWarsChar.getEye_color());

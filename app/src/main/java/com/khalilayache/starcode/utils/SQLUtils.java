@@ -4,9 +4,11 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.widget.Toast;
 
 import com.khalilayache.starcode.helpers.DBHelper;
 import com.khalilayache.starcode.models.StarWarsChar;
+import com.khalilayache.starcode.models.StarWarsFilm;
 import com.khalilayache.starcode.models.StarWarsPlanet;
 import com.khalilayache.starcode.models.StarWarsSpecie;
 
@@ -30,6 +32,9 @@ public final class SQLUtils extends DBHelper {
         db.insert("Chars",null, values);
         db.close();
 
+        if(starWarsChar.getFilms().size() > 0 || starWarsChar.getFilms() != null){
+            insertStarWarsURLFilms(starWarsChar);
+        }
     }
 
     public void updateStarWarsChar(StarWarsChar starWarsChar){
@@ -38,6 +43,10 @@ public final class SQLUtils extends DBHelper {
         String[] params = {starWarsChar.getName()};
         db.update("Chars",values,"name = ?", params);
         db.close();
+
+        if(starWarsChar.getFilms().size() > 0 || starWarsChar.getFilms() != null){
+            updateStarWarsURLFilms(starWarsChar);
+        }
     }
 
     private ContentValues getContentValuesStarWarsChar(StarWarsChar starWarsChar) {
@@ -80,6 +89,7 @@ public final class SQLUtils extends DBHelper {
                 starWarsChar.setDate(c.getString(c.getColumnIndex("date")));
                 starWarsChar.setTime(c.getString(c.getColumnIndex("time")));
                 starWarsChar.setSpecies(c.getString(c.getColumnIndex("species")));
+                starWarsChar.setFilms(getAllStarWarsURLFilmsString(starWarsChar));
                 charArrayList.add(starWarsChar);
             }
         }
@@ -109,6 +119,7 @@ public final class SQLUtils extends DBHelper {
                 warsChar.setDate(c.getString(c.getColumnIndex("date")));
                 warsChar.setTime(c.getString(c.getColumnIndex("time")));
                 warsChar.setSpecies(c.getColumnName(c.getColumnIndex("species")));
+                warsChar.setFilms(getAllStarWarsURLFilmsString(starWarsChar));
             }
         }
         c.close();
@@ -239,4 +250,101 @@ public final class SQLUtils extends DBHelper {
     }
 
     //endregion
+
+    //region StarWarsFilms Methods
+    public void insertStarWarsFilms(ArrayList<StarWarsFilm> starWarsFilms, String charName){
+        SQLiteDatabase db = getWritableDatabase();
+        for(int i = 0; i < starWarsFilms.size(); i++) {
+            ContentValues values = getContentValuesStarWarsFilms(starWarsFilms.get(i), charName);
+            db.insert("Films", null, values);
+        }
+        db.close();
+    }
+
+    private ContentValues getContentValuesStarWarsFilms(StarWarsFilm film, String charName) {
+        ContentValues values = new ContentValues();
+        values.put("charName", charName);
+        values.put("title", film.getTitle());
+        values.put("director", film.getDirector());
+        values.put("episode", film.getEpisode_id());
+        values.put("releaseDate", film.getRelease_date());
+        values.put("producer", film.getProducer());
+        return values;
+    }
+
+    public ArrayList<StarWarsFilm> getAllStarWarsFilms(String name){
+        SQLiteDatabase db = getReadableDatabase();
+        String sql = "SELECT * FROM Films where charName = ?";
+        String[] params = {name};
+        Cursor c = db.rawQuery(sql, params);
+        ArrayList<StarWarsFilm> films = new ArrayList<>();
+        if (c.getCount() > 0) {
+            while (c.moveToNext()){
+                StarWarsFilm film = new StarWarsFilm();
+                film.setDirector(c.getString(c.getColumnIndex("director")));
+                film.setProducer(c.getString(c.getColumnIndex("producer")));
+                film.setEpisode_id(c.getString(c.getColumnIndex("episode")));
+                film.setRelease_date(c.getString(c.getColumnIndex("releaseDate")));
+                film.setTitle(c.getString(c.getColumnIndex("title")));
+                films.add(film);
+            }
+        }
+        c.close();
+        db.close();
+        return films;
+    }
+
+    //endregion
+
+    //region StarWarsURLFilms Methods
+    public void insertStarWarsURLFilms(StarWarsChar starWarsChar){
+        SQLiteDatabase db = getWritableDatabase();
+        for(int i = 0; i < starWarsChar.getFilms().size(); i++) {
+            ContentValues values = getContentValuesStarWarsURLFilms(starWarsChar.getFilms().get(i), starWarsChar.getName());
+            db.insert("CharFilms", null, values);
+        }
+
+        db.close();
+
+    }
+
+    public void updateStarWarsURLFilms(StarWarsChar starWarsChar){
+        SQLiteDatabase db = getWritableDatabase();
+        String[] params = {starWarsChar.getName()};
+        db.delete("CharFilms","charName = ?",params);
+        db.close();
+        //implementar delete da tabela Films
+        insertStarWarsURLFilms(starWarsChar);
+    }
+
+    private ContentValues getContentValuesStarWarsURLFilms(String urlFilm, String charName) {
+        ContentValues values = new ContentValues();
+        values.put("charName", charName);
+        values.put("filmURL", urlFilm);
+
+        return values;
+    }
+
+    public ArrayList<String> getAllStarWarsURLFilmsString(StarWarsChar starWarsChar){
+        SQLiteDatabase db = getReadableDatabase();
+        ArrayList<String> filmsArrayList = new ArrayList<>();
+        String sql = "SELECT * FROM CharFilms where charName = ?";
+        String[] params = {starWarsChar.getName()};
+        Cursor c = db.rawQuery(sql, params);
+        if (c.getCount() > 0) {
+            while (c.moveToNext()){
+                StarWarsFilm starWarsFilm = new StarWarsFilm();
+                filmsArrayList.add(c.getString(c.getColumnIndex("filmURL")));
+            }
+        }
+        c.close();
+        db.close();
+        return filmsArrayList;
+    }
+
+    //endregion
+
+
+
+
 }

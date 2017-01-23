@@ -4,6 +4,7 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.khalilayache.starcode.models.StarWarsChar;
+import com.khalilayache.starcode.models.StarWarsFilm;
 import com.khalilayache.starcode.models.StarWarsPlanet;
 import com.khalilayache.starcode.models.StarWarsSpecie;
 
@@ -300,6 +301,53 @@ public final class ApiUtils {
         }
 
         return specie;
+    }
+
+
+    //endregion
+
+    //region StarWars Films Methods
+    public static ArrayList<StarWarsFilm> fetchFilmsData(ArrayList<String> urlFilms) {
+
+
+        ArrayList<StarWarsFilm> starWarsFilms = new ArrayList<>();
+        for(int i = 0; i < urlFilms.size(); i++) {
+            URL url = createURL(urlFilms.get(i));
+
+            String jsonResponse = null;
+
+            try {
+                jsonResponse = makeHttpRequest(url);
+            } catch (IOException e) {
+                Log.e("StarCode ERROR", "Problem making the HTTP request", e);
+            }
+            starWarsFilms.add(extractFilmFromJson(jsonResponse));
+        }
+
+        return starWarsFilms;
+    }
+
+    private static StarWarsFilm extractFilmFromJson(String charJSON){
+
+        if(TextUtils.isEmpty(charJSON)){
+            return null;
+        }
+
+        StarWarsFilm film = new StarWarsFilm();
+
+        try {
+            JSONObject root = new JSONObject(charJSON);
+            film.setTitle(root.getString("title"));
+            film.setEpisode_id(root.getString("episode_id"));
+            film.setDirector(root.getString("director"));
+            film.setProducer(root.getString("producer"));
+            film.setRelease_date(root.getString("release_date"));
+
+        } catch (JSONException e) {
+            Log.e("StarCode ERROR","Problem parsing the earthquake JSON results", e);
+        }
+
+        return film;
     }
 
 
