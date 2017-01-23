@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
     private static final int QRCODE_INTENT = 674;
 
     private String apiCharURL;
-    private final String API_VALID_URL = "http://swapi.co/api/people";
+    private final String API_VALID_URL = "http://swapi.co/api/people/";
 
     private StarWarsCharsAsyncTask starWarsCharsTask;
     private StarWarsValidURLsAsyncTask starWarsValidURLsTask;
@@ -64,11 +64,15 @@ public class MainActivity extends AppCompatActivity {
         starWarsCharsListView.setEmptyView(emptyStateTextView);
         emptyStateTextView.setText(R.string.no_chars_registered);
 
-        if (DeviceHelper.checkInternetConnection(getApplicationContext())) {
-            starWarsValidURLsTask = new StarWarsValidURLsAsyncTask();
-            starWarsValidURLsTask.execute();
-        }
+        ArrayList<String> validURLs = db.getAllStarWarsValidURL();
 
+        if(validURLs.size() == 0) {
+            if (DeviceHelper.checkInternetConnection(getApplicationContext())) {
+                starWarsValidURLsTask = new StarWarsValidURLsAsyncTask();
+                starWarsValidURLsTask.execute();
+            }
+        }
+        db.close();
     }
 
     public void launchScannerActivity(View v) {
@@ -195,12 +199,13 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(ArrayList<String> validURLs) {
-            SQLUtils db = new SQLUtils(getApplicationContext());
-            starWarsValidURLsTask = null;
 
-           if (validURLs != null & !validURLs.isEmpty()) {
-               db.insertStarWarsValidURLs(validURLs);
-           }
+            starWarsValidURLsTask = null;
+            SQLUtils db = new SQLUtils(getApplicationContext());
+            if( validURLs != null)
+                if (validURLs.size() > 0) {
+                   db.insertStarWarsValidURLs(validURLs);
+                }
         }
     }
     //endregion

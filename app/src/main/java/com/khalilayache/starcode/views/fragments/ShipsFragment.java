@@ -87,11 +87,14 @@ public class ShipsFragment extends Fragment {
     }
 
     private void fillList(ArrayList<StarWarsShip> shipArrayList) {
-
-        adapter = new StarWarsShipsListAdapter(this.getActivity().getApplicationContext(), shipArrayList );
-        starWarsShipsListView.setAdapter(adapter);
-        loadingIndicator.setVisibility(View.GONE);
-        emptyStateTextView.setVisibility(View.GONE);
+        try {
+            adapter = new StarWarsShipsListAdapter(this.getActivity().getApplicationContext(), shipArrayList);
+            starWarsShipsListView.setAdapter(adapter);
+            loadingIndicator.setVisibility(View.GONE);
+            emptyStateTextView.setVisibility(View.GONE);
+        }catch (NullPointerException e) {
+            e.printStackTrace();
+        }
     }
 
     //region Star Wars Ships AsyncTask

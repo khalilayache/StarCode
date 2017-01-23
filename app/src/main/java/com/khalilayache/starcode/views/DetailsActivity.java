@@ -21,6 +21,7 @@ import java.util.ArrayList;
 public class DetailsActivity extends AppCompatActivity {
 
     private  ArrayList<String> TAB_TITLES = new ArrayList<>();
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
@@ -45,4 +46,7 @@ public class DetailsActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(viewPager);
 
     }
+
+
+    
 }

@@ -88,11 +88,14 @@ public class FilmsFragment extends Fragment {
     }
 
     private void fillList(ArrayList<StarWarsFilm> filmArrayList) {
-
-        adapter = new StarWarsFilmsListAdapter(this.getActivity().getApplicationContext(), filmArrayList );
-        starWarsFilmsListView.setAdapter(adapter);
-        loadingIndicator.setVisibility(View.GONE);
-        emptyStateTextView.setVisibility(View.GONE);
+        try {
+            adapter = new StarWarsFilmsListAdapter(this.getActivity().getApplicationContext(), filmArrayList);
+            starWarsFilmsListView.setAdapter(adapter);
+            loadingIndicator.setVisibility(View.GONE);
+            emptyStateTextView.setVisibility(View.GONE);
+        }catch (NullPointerException e) {
+            e.printStackTrace();
+        }
     }
 
     //region Star Wars Films AsyncTask

@@ -115,6 +115,7 @@ public final class SQLUtils extends DBHelper {
                 starWarsChar.setSpecies(c.getString(c.getColumnIndex("species")));
                 starWarsChar.setFilms(getAllStarWarsURLFilmsString(starWarsChar));
                 starWarsChar.setStarships(getAllStarWarsURLShipsString(starWarsChar));
+                starWarsChar.setVehicles(getAllStarWarsURLVehiclesString(starWarsChar));
                 charArrayList.add(starWarsChar);
             }
         }
@@ -145,6 +146,8 @@ public final class SQLUtils extends DBHelper {
                 warsChar.setTime(c.getString(c.getColumnIndex("time")));
                 warsChar.setSpecies(c.getColumnName(c.getColumnIndex("species")));
                 warsChar.setFilms(getAllStarWarsURLFilmsString(starWarsChar));
+                starWarsChar.setStarships(getAllStarWarsURLShipsString(starWarsChar));
+                starWarsChar.setVehicles(getAllStarWarsURLVehiclesString(starWarsChar));
             }
         }
         c.close();

@@ -34,6 +34,8 @@ import java.util.List;
  */
 public final class ApiUtils {
 
+    private static boolean hasNext = true;
+
     //region Generic API Methods
     private static URL createURL(String stringURL){
         URL url = null;
@@ -186,18 +188,35 @@ public final class ApiUtils {
 
     //region StarWars Valid URL Methods
     public static ArrayList<String> fetchValidURLData(String requestURL) {
-        URL url =  createURL(requestURL);
 
-        String jsonResponse = null;
+        ArrayList<String> validURLs = new ArrayList<>();
+        int cont = 1;
 
-        try{
-            jsonResponse = makeHttpRequest(url);
-        } catch (IOException e) {
-            Log.e("StarCode ERROR","Problem making the HTTP request", e);
+        while(hasNext){
+            ArrayList<String> fetchedURLs;
+            URL url;
+            if(cont == 1)
+                 url = createURL(requestURL);
+            else
+                 url = createURL(requestURL + "?page=" + cont);
+
+            String jsonResponse = null;
+
+            try {
+                jsonResponse = makeHttpRequest(url);
+            } catch (IOException e) {
+                Log.e("StarCode ERROR", "Problem making the HTTP request", e);
+            }
+            fetchedURLs = extractURLsFromJson(jsonResponse);
+
+            for (int i = 0; i < fetchedURLs.size(); i++){
+                validURLs.add(fetchedURLs.get(i));
+            }
+            cont++;
         }
 
-
-        return extractURLsFromJson(jsonResponse);
+        //return extractURLsFromJson(jsonResponse);
+        return  validURLs;
     }
 
     private static ArrayList<String> extractURLsFromJson(String charJSON){
@@ -212,12 +231,16 @@ public final class ApiUtils {
             JSONObject root = new JSONObject(charJSON);
             JSONArray results =  root.getJSONArray("results");
 
+
             for(int i = 0; i < results.length(); i ++ ){
                 JSONObject currentItem = results.getJSONObject(i);
                 String url = currentItem.getString("url");
                 validUrls.add(url);
             }
 
+            String next = root.getString("next");
+            if(!next.contains("http://swapi.co/api/people/"))
+                hasNext = false;
 
         } catch (JSONException e) {
             Log.e("StarCode ERROR","Problem parsing the earthquake JSON results", e);

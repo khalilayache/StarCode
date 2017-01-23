@@ -77,49 +77,58 @@ public class CharInfoFragment extends Fragment{
     }
     
     private void fillFields(StarWarsChar starWarsChar){
+        try{
+            TextView name = (TextView) rootView.findViewById(R.id.name);
+            TextView height = (TextView) rootView.findViewById(R.id.height);
+            TextView mass = (TextView) rootView.findViewById(R.id.mass);
+            TextView hair_color = (TextView) rootView.findViewById(R.id.hair_color);
+            TextView skin_color = (TextView) rootView.findViewById(R.id.skin_color);
+            TextView eye_color = (TextView) rootView.findViewById(R.id.eye_color);
+            TextView birth_year = (TextView) rootView.findViewById(R.id.birth_year);
+            TextView gender = (TextView) rootView.findViewById(R.id.gender);
+            TextView homeworld = (TextView) rootView.findViewById(R.id.homeworld);
+            TextView url = (TextView) rootView.findViewById(R.id.url);
+            TextView date = (TextView) rootView.findViewById(R.id.date);
+            TextView time = (TextView) rootView.findViewById(R.id.time);
+            TextView specie = (TextView) rootView.findViewById(R.id.specie);
 
-        TextView name = (TextView) rootView.findViewById(R.id.name);
-        TextView height = (TextView) rootView.findViewById(R.id.height);
-        TextView mass = (TextView) rootView.findViewById(R.id.mass);
-        TextView hair_color = (TextView) rootView.findViewById(R.id.hair_color);
-        TextView skin_color = (TextView) rootView.findViewById(R.id.skin_color);
-        TextView eye_color = (TextView) rootView.findViewById(R.id.eye_color);
-        TextView birth_year = (TextView) rootView.findViewById(R.id.birth_year);
-        TextView gender = (TextView) rootView.findViewById(R.id.gender);
-        TextView homeworld = (TextView) rootView.findViewById(R.id.homeworld);
-        TextView url = (TextView) rootView.findViewById(R.id.url);
-        TextView date = (TextView) rootView.findViewById(R.id.date);
-        TextView time = (TextView) rootView.findViewById(R.id.time);
-        TextView specie = (TextView) rootView.findViewById(R.id.specie);
-
-        name.setText(starWarsChar.getName());
-        height.setText(starWarsChar.getHeight());
-        mass.setText(starWarsChar.getMass());
-        hair_color.setText(starWarsChar.getHair_color());
-        skin_color.setText(starWarsChar.getSkin_color());
-        eye_color.setText(starWarsChar.getEye_color());
-        birth_year.setText(starWarsChar.getBirth_year());
-        gender.setText(starWarsChar.getGender());
-        homeworld.setText(getString(R.string.loading));
-        url.setText(starWarsChar.getUrl());
-        date.setText(starWarsChar.getDate());
-        time.setText(starWarsChar.getTime());
-        specie.setText(getString(R.string.loading));
+            name.setText(starWarsChar.getName());
+            height.setText(starWarsChar.getHeight());
+            mass.setText(starWarsChar.getMass());
+            hair_color.setText(starWarsChar.getHair_color());
+            skin_color.setText(starWarsChar.getSkin_color());
+            eye_color.setText(starWarsChar.getEye_color());
+            birth_year.setText(starWarsChar.getBirth_year());
+            gender.setText(starWarsChar.getGender());
+            homeworld.setText(getString(R.string.loading));
+            url.setText(starWarsChar.getUrl());
+            date.setText(starWarsChar.getDate());
+            time.setText(starWarsChar.getTime());
+            specie.setText(getString(R.string.loading));
+        }catch (NullPointerException e) {
+            e.printStackTrace();
+        }
 
     }
 
     private void fillHomeworld(StarWarsPlanet planet){
+        try {
+            TextView homeworld = (TextView) rootView.findViewById(R.id.homeworld);
 
-        TextView homeworld = (TextView) rootView.findViewById(R.id.homeworld);
-
-        homeworld.setText(planet.getName());
+            homeworld.setText(planet.getName());
+        }catch (NullPointerException e) {
+            e.printStackTrace();
+        }
     }
 
     private void fillSpecie(StarWarsSpecie sp){
+        try {
+            TextView specie = (TextView) rootView.findViewById(R.id.specie);
 
-        TextView specie = (TextView) rootView.findViewById(R.id.specie);
-
-        specie.setText(sp.getName());
+            specie.setText(sp.getName());
+        }catch (NullPointerException e) {
+            e.printStackTrace();
+        }
 
     }
 

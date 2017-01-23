@@ -84,12 +84,18 @@ public class VehicleFragment extends Fragment {
     }
 
     private void fillList(ArrayList<StarWarsVehicle> vehiclesArrayList) {
+        try{
+            adapter = new StarWarsVehiclesListAdapter(this.getActivity().getApplicationContext(), vehiclesArrayList);
+            starWarsVehicleListView.setAdapter(adapter);
+            loadingIndicator.setVisibility(View.GONE);
+            emptyStateTextView.setVisibility(View.GONE);
+        }catch (NullPointerException e) {
+            e.printStackTrace();
+        }
 
-        adapter = new StarWarsVehiclesListAdapter(this.getActivity().getApplicationContext(), vehiclesArrayList );
-        starWarsVehicleListView.setAdapter(adapter);
-        loadingIndicator.setVisibility(View.GONE);
-        emptyStateTextView.setVisibility(View.GONE);
     }
+
+
 
     //region Star Wars Vehicle AsyncTask
     private class StarWarsVehicleAsyncTask extends AsyncTask<Void, Void, ArrayList<StarWarsVehicle>> {
