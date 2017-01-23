@@ -31,7 +31,6 @@ public class MainActivity extends AppCompatActivity {
 
     private static final int CAMERA_PERMISSION = 958;
     private static final int QRCODE_INTENT = 674;
-    private static final int CHAR_LOADER_ID = 257;
 
     private String apiCharURL;
     private final String API_VALID_URL = "http://swapi.co/api/people";

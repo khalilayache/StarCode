@@ -7,6 +7,8 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.khalilayache.starcode.helpers.DBHelper;
 import com.khalilayache.starcode.models.StarWarsChar;
+import com.khalilayache.starcode.models.StarWarsPlanet;
+import com.khalilayache.starcode.models.StarWarsSpecie;
 
 import java.util.ArrayList;
 
@@ -77,6 +79,7 @@ public final class SQLUtils extends DBHelper {
                 starWarsChar.setUrl(c.getString(c.getColumnIndex("url")));
                 starWarsChar.setDate(c.getString(c.getColumnIndex("date")));
                 starWarsChar.setTime(c.getString(c.getColumnIndex("time")));
+                starWarsChar.setSpecies(c.getString(c.getColumnIndex("species")));
                 charArrayList.add(starWarsChar);
             }
         }
@@ -165,6 +168,74 @@ public final class SQLUtils extends DBHelper {
         c.close();
         db.close();
         return false;
+    }
+
+    //endregion
+
+    //region StarWarsPlanets Methods
+    public void insertStarWarsPlanets(StarWarsPlanet planet, String charName){
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues values = getContentValuesStarWarsPlanets(planet,charName);
+        db.insert("Planets",null, values);
+        db.close();
+    }
+
+    private ContentValues getContentValuesStarWarsPlanets(StarWarsPlanet planet, String charName) {
+        ContentValues values = new ContentValues();
+        values.put("planetName", planet.getName());
+        values.put("charName", charName);
+
+        return values;
+    }
+
+    public StarWarsPlanet getStarWarsPlanets(String name){
+        SQLiteDatabase db = getReadableDatabase();
+        String sql = "SELECT * FROM Planets where charName = ?";
+        String[] params = {name};
+        Cursor c = db.rawQuery(sql, params);
+        StarWarsPlanet planet = new StarWarsPlanet();
+        if (c.getCount() > 0) {
+            while (c.moveToNext()){
+                planet.setName(c.getString(c.getColumnIndex("planetName")));
+            }
+        }
+        c.close();
+        db.close();
+        return planet;
+    }
+
+    //endregion
+
+    //region StarWarsSpecies Methods
+    public void insertStarWarsSpecies(StarWarsSpecie specie, String charName){
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues values = getContentValuesStarWarsSpecies(specie,charName);
+        db.insert("Species",null, values);
+        db.close();
+    }
+
+    private ContentValues getContentValuesStarWarsSpecies(StarWarsSpecie specie, String charName) {
+        ContentValues values = new ContentValues();
+        values.put("specieName", specie.getName());
+        values.put("charName", charName);
+
+        return values;
+    }
+
+    public StarWarsSpecie getStarWarsSpecies(String name){
+        SQLiteDatabase db = getReadableDatabase();
+        String sql = "SELECT * FROM Species where charName = ?";
+        String[] params = {name};
+        Cursor c = db.rawQuery(sql, params);
+        StarWarsSpecie specie = new StarWarsSpecie();
+        if (c.getCount() > 0) {
+            while (c.moveToNext()){
+                specie.setName(c.getString(c.getColumnIndex("specieName")));
+            }
+        }
+        c.close();
+        db.close();
+        return specie;
     }
 
     //endregion

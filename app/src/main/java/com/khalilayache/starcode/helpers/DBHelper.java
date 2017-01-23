@@ -45,6 +45,22 @@ public abstract class DBHelper extends SQLiteOpenHelper {
          db.execSQL(sql);
         //endregion
 
+        //region Planets Table
+        sql = "CREATE TABLE Planets (" +
+                "charName TEXT," +
+                "planetName TEXT);";
+        db.execSQL(sql);
+
+        //endregion
+
+        //region Species Table
+        sql = "CREATE TABLE Species (" +
+                "charName TEXT," +
+                "specieName TEXT);";
+        db.execSQL(sql);
+
+        //endregion
+
 
     }
 
@@ -55,6 +71,12 @@ public abstract class DBHelper extends SQLiteOpenHelper {
         db.execSQL(sql);
 
         sql = "DROP TABLE ValidURLs";
+        db.execSQL(sql);
+
+        sql = "DROP TABLE Planets";
+        db.execSQL(sql);
+
+        sql = "DROP TABLE Species";
         db.execSQL(sql);
 
         onCreate(db);

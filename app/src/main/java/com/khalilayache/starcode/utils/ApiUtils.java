@@ -4,6 +4,8 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.khalilayache.starcode.models.StarWarsChar;
+import com.khalilayache.starcode.models.StarWarsPlanet;
+import com.khalilayache.starcode.models.StarWarsSpecie;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -161,15 +163,9 @@ public final class ApiUtils {
                 starWarsChar.setVehicles(vehicles);
 
             JSONArray speciesArray = root.getJSONArray("species");
-            ArrayList<String> species = new ArrayList<>();
-            String specie = null;
-            for(int i = 0; i < speciesArray.length();i++) {
-                specie = speciesArray.getString(i);
-            }
-            if (species.size()>0)
-                starWarsChar.setSpecies(specie);
+            if (speciesArray.length()>0)
+                starWarsChar.setSpecies(speciesArray.getString(0));
 
-            Log.e("StarCode ERROR","Problem parsing the earthquake JSON results");
             /*
 
 
@@ -229,6 +225,86 @@ public final class ApiUtils {
 
     //endregion
 
+    //region StarWars Planets Methods
+    public static StarWarsPlanet fetchPlanetData(String requestURL) {
+
+        URL url =  createURL(requestURL);
+
+        String jsonResponse = null;
+
+        try{
+            jsonResponse = makeHttpRequest(url);
+        } catch (IOException e) {
+            Log.e("StarCode ERROR","Problem making the HTTP request", e);
+        }
+
+
+        return extractPlanetFromJson(jsonResponse);
+    }
+
+    private static StarWarsPlanet extractPlanetFromJson(String charJSON){
+
+        if(TextUtils.isEmpty(charJSON)){
+            return null;
+        }
+
+        StarWarsPlanet planet = new StarWarsPlanet();
+
+        try {
+            JSONObject root = new JSONObject(charJSON);
+
+            planet.setName(root.getString("name"));
+
+        } catch (JSONException e) {
+            Log.e("StarCode ERROR","Problem parsing the earthquake JSON results", e);
+        }
+
+        return planet;
+    }
+
+
+    //endregion
+
+    //region StarWars Species Methods
+    public static StarWarsSpecie fetchSpecieData(String requestURL) {
+
+        URL url =  createURL(requestURL);
+
+        String jsonResponse = null;
+
+        try{
+            jsonResponse = makeHttpRequest(url);
+        } catch (IOException e) {
+            Log.e("StarCode ERROR","Problem making the HTTP request", e);
+        }
+
+
+        return extractSpecieFromJson(jsonResponse);
+    }
+
+    private static StarWarsSpecie extractSpecieFromJson(String charJSON){
+
+        if(TextUtils.isEmpty(charJSON)){
+            return null;
+        }
+
+        StarWarsSpecie specie = new StarWarsSpecie();
+
+        try {
+            JSONObject root = new JSONObject(charJSON);
+
+            specie.setName(root.getString("name"));
+
+        } catch (JSONException e) {
+            Log.e("StarCode ERROR","Problem parsing the earthquake JSON results", e);
+        }
+
+        return specie;
+    }
+
+
+    //endregion
+
     //region FormatMethods
     private static Date getTimeNow() {
         Calendar c = Calendar.getInstance();
@@ -244,6 +320,8 @@ public final class ApiUtils {
         SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
         return dateFormat.format(date);
     }
+
+
 
 
     //endregion

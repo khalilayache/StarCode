@@ -34,7 +34,7 @@ public class DetailsActivity extends AppCompatActivity {
         StarWarsChar starWarsChar = (StarWarsChar) intent.getSerializableExtra("char");
 
         ActionBar toolbar = getSupportActionBar();
-        toolbar.setTitle(starWarsChar.getName());
+        toolbar.setTitle(getString(R.string.char_details));
         toolbar.setElevation(0f);
 
 

@@ -11,4 +11,22 @@
     <string name="pager_title_ships">Ships</string>
     <string name="pager_title_vehicle">Vehicle</string>
     <string name="chars_updated">Char updated!</string>
+    <string name="char_details">Char Details</string>
+    <string name="pager_info_name">name</string>
+    <string name="pager_info_height">height</string>
+    <string name="pager_info_mass">mass</string>
+    <string name="pager_info_hair_color">hair color</string>
+    <string name="pager_info_skin_color">skin color</string>
+    <string name="pager_info_eye_color">eye color</string>
+    <string name="pager_info_birth_year">birth year</string>
+    <string name="pager_info_gender">gender</string>
+    <string name="pager_info_homeworld">homeworld</string>
+    <string name="pager_info_species">specie</string>
+    <string name="pager_info_date">date</string>
+    <string name="pager_info_time">time</string>
+    <string name="pager_info_url">url</string>
+    <string name="pager_info_location">location</string>
+    <string name="meters">m</string>
+    <string name="kilogram">kg</string>
+    <string name="loading">Loading</string>
 </resources>
