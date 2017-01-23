@@ -10,6 +10,7 @@ import com.khalilayache.starcode.helpers.DBHelper;
 import com.khalilayache.starcode.models.StarWarsChar;
 import com.khalilayache.starcode.models.StarWarsFilm;
 import com.khalilayache.starcode.models.StarWarsPlanet;
+import com.khalilayache.starcode.models.StarWarsShip;
 import com.khalilayache.starcode.models.StarWarsSpecie;
 
 import java.util.ArrayList;
@@ -32,8 +33,14 @@ public final class SQLUtils extends DBHelper {
         db.insert("Chars",null, values);
         db.close();
 
-        if(starWarsChar.getFilms().size() > 0 || starWarsChar.getFilms() != null){
-            insertStarWarsURLFilms(starWarsChar);
+        if(starWarsChar.getFilms() != null){
+            if(starWarsChar.getFilms().size()>0)
+                insertStarWarsURLFilms(starWarsChar);
+        }
+
+        if(starWarsChar.getStarships() != null){
+            if(starWarsChar.getStarships().size() >0)
+                insertStarWarsURLShips(starWarsChar);
         }
     }
 
@@ -46,6 +53,10 @@ public final class SQLUtils extends DBHelper {
 
         if(starWarsChar.getFilms().size() > 0 || starWarsChar.getFilms() != null){
             updateStarWarsURLFilms(starWarsChar);
+        }
+
+        if(starWarsChar.getStarships().size() > 0 || starWarsChar.getStarships() != null){
+            updateStarWarsURLShips(starWarsChar);
         }
     }
 
@@ -90,6 +101,7 @@ public final class SQLUtils extends DBHelper {
                 starWarsChar.setTime(c.getString(c.getColumnIndex("time")));
                 starWarsChar.setSpecies(c.getString(c.getColumnIndex("species")));
                 starWarsChar.setFilms(getAllStarWarsURLFilmsString(starWarsChar));
+                starWarsChar.setStarships(getAllStarWarsURLShipsString(starWarsChar));
                 charArrayList.add(starWarsChar);
             }
         }
@@ -296,6 +308,45 @@ public final class SQLUtils extends DBHelper {
 
     //endregion
 
+    //region StarWarsShips Methods
+    public void insertStarWarsShips(ArrayList<StarWarsShip> starWarsShips, String charName){
+        SQLiteDatabase db = getWritableDatabase();
+        for(int i = 0; i < starWarsShips.size(); i++) {
+            ContentValues values = getContentValuesStarWarsShips(starWarsShips.get(i), charName);
+            db.insert("Starships", null, values);
+        }
+        db.close();
+    }
+
+    private ContentValues getContentValuesStarWarsShips(StarWarsShip ship, String charName) {
+        ContentValues values = new ContentValues();
+        values.put("charName", charName);
+        values.put("name", ship.getName());
+        values.put("model", ship.getModel());
+        return values;
+    }
+
+    public ArrayList<StarWarsShip> getAllStarWarsShips(String name){
+        SQLiteDatabase db = getReadableDatabase();
+        String sql = "SELECT * FROM Starships where charName = ?";
+        String[] params = {name};
+        Cursor c = db.rawQuery(sql, params);
+        ArrayList<StarWarsShip> ships = new ArrayList<>();
+        if (c.getCount() > 0) {
+            while (c.moveToNext()){
+                StarWarsShip ship = new StarWarsShip();
+                ship.setName(c.getString(c.getColumnIndex("name")));
+                ship.setModel(c.getString(c.getColumnIndex("model")));
+                ships.add(ship);
+            }
+        }
+        c.close();
+        db.close();
+        return ships;
+    }
+
+    //endregion
+
     //region StarWarsURLFilms Methods
     public void insertStarWarsURLFilms(StarWarsChar starWarsChar){
         SQLiteDatabase db = getWritableDatabase();
@@ -312,8 +363,8 @@ public final class SQLUtils extends DBHelper {
         SQLiteDatabase db = getWritableDatabase();
         String[] params = {starWarsChar.getName()};
         db.delete("CharFilms","charName = ?",params);
+        db.delete("Films","charName = ?",params);
         db.close();
-        //implementar delete da tabela Films
         insertStarWarsURLFilms(starWarsChar);
     }
 
@@ -340,6 +391,53 @@ public final class SQLUtils extends DBHelper {
         c.close();
         db.close();
         return filmsArrayList;
+    }
+
+    //endregion
+
+    //region StarWarsURLShips Methods
+    public void insertStarWarsURLShips(StarWarsChar starWarsChar){
+        SQLiteDatabase db = getWritableDatabase();
+        for(int i = 0; i < starWarsChar.getStarships().size(); i++) {
+            ContentValues values = getContentValuesStarWarsURLShips(starWarsChar.getStarships().get(i), starWarsChar.getName());
+            db.insert("CharStarships", null, values);
+        }
+
+        db.close();
+
+    }
+
+    public void updateStarWarsURLShips(StarWarsChar starWarsChar){
+        SQLiteDatabase db = getWritableDatabase();
+        String[] params = {starWarsChar.getName()};
+        db.delete("CharStarships","charName = ?",params);
+        db.delete("Starships","charName = ?",params);
+        db.close();
+        insertStarWarsURLFilms(starWarsChar);
+    }
+
+    private ContentValues getContentValuesStarWarsURLShips(String urlShip, String charName) {
+        ContentValues values = new ContentValues();
+        values.put("charName", charName);
+        values.put("starshipURL", urlShip);
+
+        return values;
+    }
+
+    public ArrayList<String> getAllStarWarsURLShipsString(StarWarsChar starWarsChar){
+        SQLiteDatabase db = getReadableDatabase();
+        ArrayList<String> shipsArrayList = new ArrayList<>();
+        String sql = "SELECT * FROM CharStarships where charName = ?";
+        String[] params = {starWarsChar.getName()};
+        Cursor c = db.rawQuery(sql, params);
+        if (c.getCount() > 0) {
+            while (c.moveToNext()){
+                shipsArrayList.add(c.getString(c.getColumnIndex("starshipURL")));
+            }
+        }
+        c.close();
+        db.close();
+        return shipsArrayList;
     }
 
     //endregion

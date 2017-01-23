@@ -6,6 +6,7 @@ import android.util.Log;
 import com.khalilayache.starcode.models.StarWarsChar;
 import com.khalilayache.starcode.models.StarWarsFilm;
 import com.khalilayache.starcode.models.StarWarsPlanet;
+import com.khalilayache.starcode.models.StarWarsShip;
 import com.khalilayache.starcode.models.StarWarsSpecie;
 
 import org.json.JSONArray;
@@ -352,6 +353,52 @@ public final class ApiUtils {
 
 
     //endregion
+
+    //region StarWars Ships Methods
+    public static ArrayList<StarWarsShip> fetchShipsData(ArrayList<String> urlShips) {
+
+
+        ArrayList<StarWarsShip> starWarsShips = new ArrayList<>();
+        for(int i = 0; i < urlShips.size(); i++) {
+            URL url = createURL(urlShips.get(i));
+
+            String jsonResponse = null;
+
+            try {
+                jsonResponse = makeHttpRequest(url);
+            } catch (IOException e) {
+                Log.e("StarCode ERROR", "Problem making the HTTP request", e);
+            }
+            starWarsShips.add(extractShipFromJson(jsonResponse));
+        }
+        return starWarsShips;
+    }
+
+    private static StarWarsShip extractShipFromJson(String charJSON){
+
+        if(TextUtils.isEmpty(charJSON)){
+            return null;
+        }
+
+        StarWarsShip ship = new StarWarsShip();
+
+        try {
+            JSONObject root = new JSONObject(charJSON);
+            ship.setName(root.getString("name"));
+            ship.setModel(root.getString("model"));
+
+        } catch (JSONException e) {
+            Log.e("StarCode ERROR","Problem parsing the earthquake JSON results", e);
+        }
+
+        return ship;
+    }
+
+
+    //endregion
+
+
+
 
     //region FormatMethods
     private static Date getTimeNow() {

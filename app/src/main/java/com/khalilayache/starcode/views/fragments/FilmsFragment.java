@@ -65,16 +65,22 @@ public class FilmsFragment extends Fragment {
         emptyStateTextView.setText(R.string.no_films_found);
 
 
-        if(starWarsChar.getFilms().size() > 0 || starWarsChar.getFilms() != null) {
-            emptyStateTextView.setVisibility(View.GONE);
-            SQLUtils db = new SQLUtils(rootView.getContext());
-            filmArrayList = db.getAllStarWarsFilms(starWarsChar.getName());
-            if (filmArrayList.size() == 0 || filmArrayList == null){
-                starWarsFilmsTask = new StarWarsFilmsAsyncTask();
-                starWarsFilmsTask.execute();
-            }else{
-                fillList(filmArrayList);
+        if(starWarsChar.getFilms() != null) {
+            if (starWarsChar.getFilms().size() > 0) {
+                emptyStateTextView.setVisibility(View.GONE);
+                SQLUtils db = new SQLUtils(rootView.getContext());
+                filmArrayList = db.getAllStarWarsFilms(starWarsChar.getName());
+                if (filmArrayList.size() == 0 || filmArrayList == null){
+                    starWarsFilmsTask = new StarWarsFilmsAsyncTask();
+                    starWarsFilmsTask.execute();
+                }else{
+                    fillList(filmArrayList);
+                }
+            } else {
+                loadingIndicator.setVisibility(View.GONE);
             }
+        }else{
+            loadingIndicator.setVisibility(View.GONE);
         }
 
 

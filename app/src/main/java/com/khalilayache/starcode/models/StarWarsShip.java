@@ -6,7 +6,6 @@ public class StarWarsShip implements java.io.Serializable {
     private String name;
     private String model;
     private String url;
-    private String char_url;
 
 
     public String getName() {
@@ -33,11 +32,4 @@ public class StarWarsShip implements java.io.Serializable {
         this.url = url;
     }
 
-    public String getChar_url() {
-        return char_url;
-    }
-
-    public void setChar_url(String char_url) {
-        this.char_url = char_url;
-    }
 }
