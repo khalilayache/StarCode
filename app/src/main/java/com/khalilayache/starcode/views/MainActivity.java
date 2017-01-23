@@ -167,8 +167,18 @@ public class MainActivity extends AppCompatActivity {
                     db.insertStarWarsChar(starWarsChar);
                 }
             }else{
+                int index = 0;
+                for(int i = 0; i < charArrayList.size();i++){
+                    if(charArrayList.get(i).getName().equals(starWarsChar.getName())){
+                        index = i;
+                        i = charArrayList.size() + 1;
+                    }
+                }
+                db.updateStarWarsChar(starWarsChar);
+                charArrayList.set(index,starWarsChar);
+                adapter.notifyDataSetChanged();
+                Toast.makeText(MainActivity.this, R.string.chars_updated, Toast.LENGTH_SHORT).show();
                 loadingIndicator.setVisibility(View.GONE);
-                Toast.makeText(MainActivity.this, R.string.chars_already_registered, Toast.LENGTH_SHORT).show();
             }
 
         }

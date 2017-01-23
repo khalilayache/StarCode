@@ -19,7 +19,7 @@
         app:tabBackground="@color/colorPrimary"
         app:tabSelectedTextColor="@android:color/white"
         app:tabIndicatorColor="@android:color/white"
-        app:tabTextColor="@color/textColorItemPrimary"
+        app:tabTextColor="@color/textColorPagerItem"
         />
 
 

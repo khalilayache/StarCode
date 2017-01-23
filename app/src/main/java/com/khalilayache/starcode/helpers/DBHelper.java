@@ -37,6 +37,7 @@ public abstract class DBHelper extends SQLiteOpenHelper {
                 "eye_color TEXT," +
                 "birth_year TEXT," +
                 "gender TEXT," +
+                "species TEXT," +
                 "homeworld TEXT," +
                 "url TEXT," +
                 "date TEXT," +

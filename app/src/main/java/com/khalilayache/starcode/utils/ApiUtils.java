@@ -162,12 +162,12 @@ public final class ApiUtils {
 
             JSONArray speciesArray = root.getJSONArray("species");
             ArrayList<String> species = new ArrayList<>();
+            String specie = null;
             for(int i = 0; i < speciesArray.length();i++) {
-                String specie = speciesArray.getString(i);
-                species.add(specie);
+                specie = speciesArray.getString(i);
             }
             if (species.size()>0)
-                starWarsChar.setSpecies(species);
+                starWarsChar.setSpecies(specie);
 
             Log.e("StarCode ERROR","Problem parsing the earthquake JSON results");
             /*

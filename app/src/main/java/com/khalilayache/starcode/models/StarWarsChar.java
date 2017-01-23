@@ -17,11 +17,12 @@ public class StarWarsChar implements java.io.Serializable {
     private String url;
     private String date;
     private String time;
+    private String species;
 
     private ArrayList<String> films;
     private ArrayList<String> starships;
     private ArrayList<String> vehicles;
-    private ArrayList<String> species;
+
 
     public String getName() {
         return name;
@@ -143,11 +144,11 @@ public class StarWarsChar implements java.io.Serializable {
         this.vehicles = vehicles;
     }
 
-    public ArrayList<String> getSpecies() {
+    public String getSpecies() {
         return species;
     }
 
-    public void setSpecies(ArrayList<String> species) {
+    public void setSpecies(String species) {
         this.species = species;
     }
 }

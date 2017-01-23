@@ -30,6 +30,14 @@ public final class SQLUtils extends DBHelper {
 
     }
 
+    public void updateStarWarsChar(StarWarsChar starWarsChar){
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues values = getContentValuesStarWarsChar(starWarsChar);
+        String[] params = {starWarsChar.getName()};
+        db.update("Chars",values,"name = ?", params);
+        db.close();
+    }
+
     private ContentValues getContentValuesStarWarsChar(StarWarsChar starWarsChar) {
         ContentValues values = new ContentValues();
         values.put("name", starWarsChar.getName());
@@ -44,6 +52,7 @@ public final class SQLUtils extends DBHelper {
         values.put("url", starWarsChar.getUrl());
         values.put("date", starWarsChar.getDate());
         values.put("time", starWarsChar.getTime());
+        values.put("species",starWarsChar.getSpecies());
 
         return values;
     }
@@ -96,6 +105,7 @@ public final class SQLUtils extends DBHelper {
                 warsChar.setUrl(c.getString(c.getColumnIndex("url")));
                 warsChar.setDate(c.getString(c.getColumnIndex("date")));
                 warsChar.setTime(c.getString(c.getColumnIndex("time")));
+                warsChar.setSpecies(c.getColumnName(c.getColumnIndex("species")));
             }
         }
         c.close();
