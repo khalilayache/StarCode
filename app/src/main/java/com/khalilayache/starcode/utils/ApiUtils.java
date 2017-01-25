@@ -137,8 +137,8 @@ public final class ApiUtils {
             starWarsChar.setGender(root.getString("gender"));
             starWarsChar.setHomeworld(root.getString("homeworld"));
             starWarsChar.setUrl(root.getString("url"));
-            starWarsChar.setDate(formatDate(getTimeNow()));
-            starWarsChar.setTime(formatTime(getTimeNow()));
+            starWarsChar.setDate(StringUtils.formatDate(getTimeNow()));
+            starWarsChar.setTime(StringUtils.formatTime(getTimeNow()));
 
             JSONArray filmsArray = root.getJSONArray("films");
             ArrayList<String> films = new ArrayList<>();
@@ -366,7 +366,7 @@ public final class ApiUtils {
             film.setEpisode_id(root.getString("episode_id"));
             film.setDirector(root.getString("director"));
             film.setProducer(root.getString("producer"));
-            film.setRelease_date(root.getString("release_date"));
+            film.setRelease_date(StringUtils.formatDateFromApi(root.getString("release_date")));
 
         } catch (JSONException e) {
             Log.e("StarCode ERROR","Problem parsing the earthquake JSON results", e);
@@ -464,24 +464,12 @@ public final class ApiUtils {
 
     //endregion
 
-    //region FormatMethods
+    //region Other Methods
     private static Date getTimeNow() {
         Calendar c = Calendar.getInstance();
         return c.getTime();
     }
-
-    private static String formatDate(Date date) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        return dateFormat.format(date);
-    }
-
-    private static String formatTime(Date date) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
-        return dateFormat.format(date);
-    }
-
-
-
-
     //endregion
+
+
 }

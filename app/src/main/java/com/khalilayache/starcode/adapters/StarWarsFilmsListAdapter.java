@@ -49,25 +49,13 @@ public class StarWarsFilmsListAdapter extends ArrayAdapter<StarWarsFilm> {
             producerView.setText(currentFilm.getProducer());
 
             TextView releaseView = (TextView) listViewItem.findViewById(R.id.film_release_date);
-            releaseView.setText(formatDate(currentFilm.getRelease_date()));
+            releaseView.setText(currentFilm.getRelease_date());
 
         }
 
         return listViewItem;
     }
 
-    private static String formatDate(String dataString) {
-        DateFormat formatterToDate = new SimpleDateFormat("yyyy-MM-dd");
-         try {
-             Date data = formatterToDate.parse(dataString);
-             DateFormat formatterToString = new SimpleDateFormat("dd/MM/yyyy");
-             return formatterToString.format(data);
-        } catch (ParseException e) {
-            e.printStackTrace();
 
-        }
-
-        return dataString;
-    }
 
    }

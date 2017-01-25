@@ -8,6 +8,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -45,6 +46,8 @@ public class MainActivity extends AppCompatActivity {
     private StarWarsCharListAdapter adapter;
     private View loadingIndicator;
 
+    private FloatingActionButton fabAddChar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +57,8 @@ public class MainActivity extends AppCompatActivity {
         loadingIndicator.setVisibility(View.GONE);
 
         emptyStateTextView = (TextView) findViewById(R.id.empty_view);
+
+        fabAddChar = (FloatingActionButton) findViewById(R.id.add_char);
 
         ListView starWarsCharsListView = (ListView) findViewById(R.id.list);
         SQLUtils db = new SQLUtils(getApplicationContext());
@@ -76,23 +81,32 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void launchScannerActivity(View v) {
+        fabAddChar.setEnabled(false);
+        PackageManager pm = getPackageManager();
+        if (pm.hasSystemFeature(PackageManager.FEATURE_CAMERA)) {
+            if (DeviceHelper.checkInternetConnection(getApplicationContext())) {
+                SQLUtils db = new SQLUtils(getApplicationContext());
+                if (db.getAllStarWarsValidURL().size() > 0) {
+                    launchActivity(ScannerActivity.class);
+                } else {
+                    starWarsValidURLsTask = new StarWarsValidURLsAsyncTask();
+                    starWarsValidURLsTask.execute();
+                    launchActivity(ScannerActivity.class);
+                }
 
-        if(DeviceHelper.checkInternetConnection(getApplicationContext())) {
-            SQLUtils db = new SQLUtils(getApplicationContext());
-            if(db.getAllStarWarsValidURL().size() > 0) {
-                launchActivity(ScannerActivity.class);
-            }else{
-                starWarsValidURLsTask = new StarWarsValidURLsAsyncTask();
-                starWarsValidURLsTask.execute();
-                launchActivity(ScannerActivity.class);
+            } else {
+                fabAddChar.setEnabled(true);
+                Toast.makeText(this, getString(R.string.no_connection), Toast.LENGTH_SHORT).show();
             }
-
         }else{
-            Toast.makeText(this, getString(R.string.no_connection), Toast.LENGTH_SHORT).show();
+            fabAddChar.setEnabled(true);
+            Toast.makeText(this, getString(R.string.no_camera_found), Toast.LENGTH_SHORT).show();
         }
+
     }
 
     public void launchActivity(Class<?> clss) {
+
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
                 != PackageManager.PERMISSION_GRANTED) {
             mClss = clss;
@@ -101,14 +115,13 @@ public class MainActivity extends AppCompatActivity {
         } else {
             Intent intent = new Intent(this, clss);
             startActivityForResult(intent,QRCODE_INTENT);
-
         }
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
+        fabAddChar.setEnabled(true);
         if(requestCode == QRCODE_INTENT){
             if(resultCode == RESULT_OK){
                 if(DeviceHelper.checkInternetConnection(getApplicationContext())) {
@@ -123,7 +136,7 @@ public class MainActivity extends AppCompatActivity {
                 }
 
             }else if(resultCode == RESULT_CANCELED){
-                Toast.makeText(this, "Action cancelled", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.action_cancelled, Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -139,6 +152,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 } else {
                     Toast.makeText(this, R.string.access_camera_not_grant, Toast.LENGTH_SHORT).show();
+                    fabAddChar.setEnabled(true);
                 }
         }
     }

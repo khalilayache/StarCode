@@ -95,8 +95,6 @@ public class VehicleFragment extends Fragment {
 
     }
 
-
-
     //region Star Wars Vehicle AsyncTask
     private class StarWarsVehicleAsyncTask extends AsyncTask<Void, Void, ArrayList<StarWarsVehicle>> {
 

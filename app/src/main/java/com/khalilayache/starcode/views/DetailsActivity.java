@@ -48,5 +48,5 @@ public class DetailsActivity extends AppCompatActivity {
     }
 
 
-    
+
 }

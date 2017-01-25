@@ -1,0 +1,128 @@
+<resources>
+
+    <string name="access_camera_not_grant">Por favor autorize o acesso à câmera para usar o leitor de QRCode</string>
+    <string name="no_connection">Sem conexão com a internet</string>
+    <string name="no_chars_registered">Nenhum personagem cadastrado</string>
+    <string name="chars_already_registered">Personagem já cadastrado!</string>
+    <string name="invalid_url">URL Inválida!</string>
+    <string name="pager_title_info">Infos</string>
+    <string name="pager_title_films">Filmes</string>
+    <string name="pager_title_ships">Naves</string>
+    <string name="pager_title_vehicle">Veículos</string>
+    <string name="chars_updated">Personagem atualizado!</string>
+    <string name="char_details">Detalhes do Personagem</string>
+    <string name="pager_info_name">nome</string>
+    <string name="pager_info_height">altura</string>
+    <string name="pager_info_mass">peso</string>
+    <string name="pager_info_hair_color">cor de cabelo</string>
+    <string name="pager_info_skin_color">tom de pele</string>
+    <string name="pager_info_eye_color">cor do olho</string>
+    <string name="pager_info_birth_year">ano de nascimento</string>
+    <string name="pager_info_gender">gênero</string>
+    <string name="pager_info_homeworld">mundo de origem</string>
+    <string name="pager_info_species">espécie</string>
+    <string name="pager_info_date">data</string>
+    <string name="pager_info_time">hora</string>
+    <string name="pager_info_url">url</string>
+    <string name="pager_info_location">localização</string>
+    <string name="meters">m</string>
+    <string name="kilogram">kg</string>
+    <string name="loading">Carregando</string>
+    <string name="no_films_found">Nenhum filme encontrado</string>
+    <string name="director_name">Diretor:</string>
+    <string name="producer_name">Produtor:</string>
+    <string name="release_date">Data de Lançamento:</string>
+    <string name="ship_model">Modelo:</string>
+    <string name="no_ships_found">Nenhuma nave encontrada</string>
+    <string name="no_vehicles_found">Nenhum veículo encontrado</string>
+    <string name="action_cancelled">Ação cancelada</string>
+    <string name="no_camera_found">Seu celular não possui câmera.</string>
+
+
+    <!-- Birth Year Strings -->
+
+    <string name="birth_year_unknown">desconhecido</string>
+
+
+    <!-- Eye Color Strings -->
+
+    <string name="eye_color_black">preto</string>
+    <string name="eye_color_blue">azul</string>
+    <string name="eye_color_blue_gray">azul acinzentado</string>
+    <string name="eye_color_brown">marrom</string>
+    <string name="eye_color_dark">negro</string>
+    <string name="eye_color_gold">ouro</string>
+    <string name="eye_color_green_yellow">verde, amarelo</string>
+    <string name="eye_color_hazel">avelã</string>
+    <string name="eye_color_orange">laranja</string>
+    <string name="eye_color_pink">rosa</string>
+    <string name="eye_color_red">vermelho</string>
+    <string name="eye_color_red_blue">vermelho, azul</string>
+    <string name="eye_color_white">branco</string>
+    <string name="eye_color_yellow">amarelo</string>
+
+    <!-- Gender Strings -->
+
+    <string name="gender_female">feminino</string>
+    <string name="gender_hermaphrodite">hermafrodita</string>
+    <string name="gender_male">masculino</string>
+    <string name="gender_na">não tem</string>
+    <string name="gender_none">nenhum</string>
+
+    <!-- Hair Color Strings -->
+
+    <string name="hair_color_auburn">castanho</string>
+    <string name="hair_color_auburn_grey">castanho, cinza</string>
+    <string name="hair_color_auburn_white">castanho, branco</string>
+    <string name="hair_color_black">preto</string>
+    <string name="hair_color_blond">loiro</string>
+    <string name="hair_color_blonde">loiro</string>
+    <string name="hair_color_brown">marrom</string>
+    <string name="hair_color_brown_grey">marrom, cinza</string>
+    <string name="hair_color_grey">cinza</string>
+    <string name="hair_color_na">não tem</string>
+    <string name="hair_color_none">nenhuma</string>
+    <string name="hair_color_white">branco</string>
+
+    <!-- Skin Color Strings -->
+
+    <string name="skin_color_blue">azul</string>
+    <string name="skin_color_blue_grey">azul, cinza</string>
+    <string name="skin_color_brown">marrom</string>
+    <string name="skin_color_brown_mottle">marrom acinzentada</string>
+    <string name="skin_color_brown_white">marrom, branca</string>
+    <string name="skin_color_dark">negra</string>
+    <string name="skin_color_fair">clara</string>
+    <string name="skin_color_fair_green_yellow">clara, verde, amarela</string>
+    <string name="skin_color_gold">dourada</string>
+    <string name="skin_color_green">verde</string>
+    <string name="skin_color_green_gray">verde, cinza</string>
+    <string name="skin_color_green_tan_brown">verde bronzeada, marrom</string>
+    <string name="skin_color_grey">cinza</string>
+    <string name="skin_color_grey_blue">cinza, azul</string>
+    <string name="skin_color_grey_green_yellow">cinza, verde, amarela</string>
+    <string name="skin_color_grey_red">cinza, vermelha</string>
+    <string name="skin_color_light">clara</string>
+    <string name="skin_color_metal">metal</string>
+    <string name="skin_color_mottled_green">verde bronzeada</string>
+    <string name="skin_color_none">não tem</string>
+    <string name="skin_color_orange">laranja</string>
+    <string name="skin_color_pale">pálida</string>
+    <string name="skin_color_red">vermelha</string>
+    <string name="skin_color_red_blue_white">vermelha, azul, branca</string>
+    <string name="skin_color_silver_red">prateada, vermelha</string>
+    <string name="skin_color_tan">bronzeada</string>
+    <string name="skin_color_white">branca</string>
+    <string name="skin_color_white_blue">branca, azul</string>
+    <string name="skin_color_white_red">branca, vermelha</string>
+    <string name="skin_color_yellow">amarela</string>
+
+
+    <!-- Species Strings -->
+
+    <string name="species_droid">robô</string>
+    <string name="gender_human">humana</string>
+    <string name="gender_yoda">espécie do Yoda</string>
+
+
+</resources>

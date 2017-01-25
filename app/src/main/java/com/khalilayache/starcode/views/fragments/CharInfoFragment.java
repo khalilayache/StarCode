@@ -17,6 +17,7 @@ import com.khalilayache.starcode.models.StarWarsPlanet;
 import com.khalilayache.starcode.models.StarWarsSpecie;
 import com.khalilayache.starcode.utils.ApiUtils;
 import com.khalilayache.starcode.utils.SQLUtils;
+import com.khalilayache.starcode.utils.StringUtils;
 import com.khalilayache.starcode.views.MainActivity;
 
 
@@ -49,7 +50,7 @@ public class CharInfoFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         rootView  = inflater.inflate(R.layout.pager_info,container,false);
         loadingIndicator = rootView.findViewById(R.id.loading_indicator);
-        loadingIndicator.setVisibility(View.GONE);
+        loadingIndicator.setVisibility(View.INVISIBLE);
 
         SQLUtils db = new SQLUtils(rootView.getContext());
         fillFields(starWarsChar);
@@ -92,14 +93,14 @@ public class CharInfoFragment extends Fragment{
             TextView time = (TextView) rootView.findViewById(R.id.time);
             TextView specie = (TextView) rootView.findViewById(R.id.specie);
 
-            name.setText(starWarsChar.getName());
-            height.setText(starWarsChar.getHeight());
-            mass.setText(starWarsChar.getMass());
-            hair_color.setText(starWarsChar.getHair_color());
-            skin_color.setText(starWarsChar.getSkin_color());
-            eye_color.setText(starWarsChar.getEye_color());
-            birth_year.setText(starWarsChar.getBirth_year());
-            gender.setText(starWarsChar.getGender());
+            name.setText(StringUtils.upperFirstLetter(starWarsChar.getName()));
+            height.setText(StringUtils.upperFirstLetter(starWarsChar.getHeight()) + getString(R.string.meters));
+            mass.setText(StringUtils.upperFirstLetter(starWarsChar.getMass())+ getString(R.string.kilogram));
+            hair_color.setText(StringUtils.internacionalizeHairColor(starWarsChar.getHair_color(), this.getActivity()));
+            skin_color.setText(StringUtils.internacionalizeSkinColor(starWarsChar.getSkin_color(), this.getContext()));
+            eye_color.setText(StringUtils.internacionalizeEyeColor(starWarsChar.getEye_color(), this.getContext()));
+            birth_year.setText(StringUtils.internacionalizeBirth(starWarsChar.getBirth_year(),this.getContext()));
+            gender.setText(StringUtils.internacionalizeGender(starWarsChar.getGender(), this.getContext()));
             homeworld.setText(getString(R.string.loading));
             url.setText(starWarsChar.getUrl());
             date.setText(starWarsChar.getDate());
@@ -115,7 +116,7 @@ public class CharInfoFragment extends Fragment{
         try {
             TextView homeworld = (TextView) rootView.findViewById(R.id.homeworld);
 
-            homeworld.setText(planet.getName());
+            homeworld.setText(StringUtils.upperFirstLetter(planet.getName()));
         }catch (NullPointerException e) {
             e.printStackTrace();
         }
@@ -125,7 +126,7 @@ public class CharInfoFragment extends Fragment{
         try {
             TextView specie = (TextView) rootView.findViewById(R.id.specie);
 
-            specie.setText(sp.getName());
+            specie.setText(StringUtils.internacionalizeSpecies(sp.getName(), this.getContext()));
         }catch (NullPointerException e) {
             e.printStackTrace();
         }
@@ -179,7 +180,7 @@ public class CharInfoFragment extends Fragment{
                 db.insertStarWarsSpecies(specie, starWarsChar.getName());
                 fillSpecie(specie);
                 if (starWarsPlanetTask == null) {
-                    loadingIndicator.setVisibility(View.GONE);
+                    loadingIndicator.setVisibility(View.INVISIBLE);
                 }
             }
         }
