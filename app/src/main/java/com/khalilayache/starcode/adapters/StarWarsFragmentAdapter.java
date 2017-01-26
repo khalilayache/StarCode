@@ -5,7 +5,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.khalilayache.starcode.R;
 import com.khalilayache.starcode.models.StarWarsChar;
 import com.khalilayache.starcode.views.fragments.CharInfoFragment;
 import com.khalilayache.starcode.views.fragments.FilmsFragment;

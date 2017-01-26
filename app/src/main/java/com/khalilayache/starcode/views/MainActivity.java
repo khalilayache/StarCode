@@ -1,11 +1,8 @@
 package com.khalilayache.starcode.views;
 
 import android.Manifest;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -82,8 +79,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void launchScannerActivity(View v) {
         fabAddChar.setEnabled(false);
-        PackageManager pm = getPackageManager();
-        if (pm.hasSystemFeature(PackageManager.FEATURE_CAMERA)) {
+        if (DeviceHelper.checkDeviceHasCamera(getApplicationContext())) {
             if (DeviceHelper.checkInternetConnection(getApplicationContext())) {
                 SQLUtils db = new SQLUtils(getApplicationContext());
                 if (db.getAllStarWarsValidURL().size() > 0) {

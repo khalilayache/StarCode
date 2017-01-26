@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.khalilayache.starcode.R;
 import com.khalilayache.starcode.models.StarWarsChar;
@@ -18,7 +17,6 @@ import com.khalilayache.starcode.models.StarWarsSpecie;
 import com.khalilayache.starcode.utils.ApiUtils;
 import com.khalilayache.starcode.utils.SQLUtils;
 import com.khalilayache.starcode.utils.StringUtils;
-import com.khalilayache.starcode.views.MainActivity;
 
 
 /**
